@@ -7,18 +7,39 @@ header {
     display: flex;
     justify-content: space-between;
     padding: 20px 0;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;
+    font-size: 1.3rem;
+    padding-right: 1rem;
 }
 
 nav a {
-    margin: .5em;
+    height: 100%;
+    width: 100%;
+    font-family: "Poppins", serif;
 }
 
-nav a:active {
+nav a:last-child {
+    padding-right: 3rem;
+}
+
+nav a:hover {
     color: purple;
+    text-decoration: underline;
 }
 
 nav a.active {
     color: darkblue;
     font-weight: bold;
-    text-decoration: overline;
+}
+
+.app-header h1 {
+    padding-left: 2rem;
+    font-family: "Annie Use Your Telescope", serif;
+    font-size: 3rem;
 }
