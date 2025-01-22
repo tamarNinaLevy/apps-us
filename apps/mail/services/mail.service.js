@@ -9,6 +9,7 @@ export const mailService = {
     get,
     remove,
     save,
+    countUnraed
 }
 
 function query(filterBy = {}) {
@@ -35,6 +36,12 @@ function save(mail) {
     } else {
         return storageService.post(MAIL_KEY, mail)
     }
+}
+
+function countUnraed(mails) {
+    const unread = mails.filter((mail) => !mail.isRead)
+    console.log("unread: ", unread);
+    return unread.length
 }
 
 function _createMails() {

@@ -1,0 +1,17 @@
+.preview-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+    background-color: white;
+
+    padding: 15px;
+
+    border-bottom: solid thin lightgray;
+}
+
+.preview-container:hover{
+    box-shadow: 2px 4px 6px 0px;
+    margin-bottom: 4px;
+}
