@@ -1,7 +1,7 @@
 import { NotePreview } from "../cmps/NotePreview.jsx"
 
 
-export function NoteList({ notes }) {
+export function NoteList({ notes, handleOnRemoveNote }) {
 
     if (!notes) return <div>No Notes to show</div>
     return (
@@ -9,7 +9,8 @@ export function NoteList({ notes }) {
             {notes.map(note => (
                 <li key={note.id}>
                     <NotePreview
-                        note={note} />
+                        note={note}
+                        handleOnRemoveNote={() => { handleOnRemoveNote(note.id) }} />
                 </li>
             ))}
         </ul>

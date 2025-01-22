@@ -22,6 +22,9 @@ export function NoteIndex() {
 
     function onRemoveNote(noteId) {
         noteService.remove(noteId)
+            .then(() => {
+                setNotes(notes => notes.filter(note => note.id !== noteId))
+            })
     }
 
     if (!notes) return <div>Loading...</div>
@@ -29,7 +32,8 @@ export function NoteIndex() {
         <NoteAdd handleOnAddNote={onAddNote} />
         <section className="note-index">
             <NoteList
-                notes={notes} />
+                notes={notes}
+                handleOnRemoveNote={onRemoveNote} />
         </section>
     </div>
     )
