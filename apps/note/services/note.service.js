@@ -1,7 +1,12 @@
 // note service
-import { storageService } from 'services/async-storage.service.js'
-import { loadFromStorage, saveToStorage } from 'services/util.service.js'
-
+import { storageService } from '../../../services/async-storage.service.js'
+import { loadFromStorage, saveToStorage } from '../../../services/util.service.js'
+export const noteService = {
+    get,
+    query,
+    remove,
+    save
+}
 const NOTE_KEY = 'noteDB'
 _createNotes()
 
@@ -26,9 +31,8 @@ function save(note) {
 }
 
 function _createNotes() {
-    console.log('creating notes')
+    console.log('hi')
     let notes = loadFromStorage(NOTE_KEY)
-
     if (!notes || !notes.length) {
         const notes = [
             {
