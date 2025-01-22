@@ -21,7 +21,7 @@ export function MailIndex() {
             })
     }
 
-    return <div>
+    return <div className='mail-index-container'>
         <h1>mail app</h1>
         {mails.length > 0 && <MailList mails={mails} />}
     </div>

@@ -14,11 +14,14 @@ import { MailPreview } from "./MailPreview.jsx"
 
 export function MailList({ mails }) {
 
-    return <div>
+    return <div className="mail-list">
         {mails.map((mail) => {
             return <div className="mail-preview-container">
-                <MailPreview mail={mail} />
-            </div>            
+                <MailPreview
+                    key={mail.id}
+                    mail={mail}
+                />
+            </div>
         })}
     </div>
 }

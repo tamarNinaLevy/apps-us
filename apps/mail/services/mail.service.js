@@ -60,5 +60,4 @@ function _createMail() {
         from: 'momo@momo.com',
         to: 'user@appsus.com'
     }
-
 }
