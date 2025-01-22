@@ -1,0 +1,10 @@
+.note-add form {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    border: 1px black solid;
+    max-width: fit-content;
+    max-height: fit-content;
+    padding: 1rem;
+    border-radius: 25px;
+}
