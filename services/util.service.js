@@ -43,14 +43,12 @@ export function getDayName(date, locale) {
     return date.toLocaleDateString(locale, { weekday: 'long' })
 }
 
-
 export function getMonthName(date) {
     const monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ]
     return monthNames[date.getMonth()]
 }
-
 
 export function saveToStorage(key, val) {
     localStorage.setItem(key, JSON.stringify(val))
