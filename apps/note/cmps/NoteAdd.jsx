@@ -48,21 +48,22 @@ export function NoteAdd({ handleOnAddNote }) {
 
     const handleAddNote = (event) => {
         event.preventDefault()
-        noteService.save(newNote).then(() => {
-            setNewNote(noteService.getEmptyNote())
-            setIsOpen(false)
-            handleOnAddNote()
-        })
+        if (newNote.info.txt || (Array.isArray(newNote.info.todos) && newNote.info.todos.length > 0)) {
+            noteService.save(newNote).then(() => {
+                setNewNote(noteService.getEmptyNote())
+                setIsOpen(false)
+                handleOnAddNote()
+            })
+        }
     }
 
     const handleClickOutside = (event) => {
         if (cmpRef.current && !cmpRef.current.contains(event.target)) {
             setIsOpen(false)
-            if (newNote.info.txt || (Array.isArray(newNote.info.todos) && newNote.info.todos.length > 0)) {
-                handleAddNote(event)
-            }
+            handleAddNote(event)
+
         }
-    };
+    }
 
     useEffect(() => {
         if (isOpen) {
@@ -87,10 +88,8 @@ export function NoteAdd({ handleOnAddNote }) {
                         value={newNote.info.title || ""}
                     />
                 )}
-                <input
+                <textarea
                     onClick={() => setIsOpen(true)}
-                    required
-                    type="text"
                     name={selectedType === "NoteTxt" ? "txt" : "todos"}
                     placeholder={
                         selectedType === "NoteTxt"

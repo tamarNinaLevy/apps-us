@@ -15,21 +15,20 @@
     box-shadow: 0px 0.25rem 1rem rgba(0, 0, 0, 0.425);
 }
 
-.note-add form input[name="txt"] {
-    border: 0;
-}
 
 .note-add form input[name="color"] {
     border: 0;
 }
 
-.note-add form input {
+.note-add form input,
+.note-add form textarea {
     border: 0;
     padding: 0.5rem 1rem;
     font-size: 1rem;
 }
 
-.note-add form input:focus {
+.note-add form input:focus,
+.note-add form textarea:focus {
     border: 0;
     outline: 0;
 }
