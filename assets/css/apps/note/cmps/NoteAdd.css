@@ -25,6 +25,9 @@
     border: 0;
     padding: 0.5rem 1rem;
     font-size: 1rem;
+    height: auto;
+    resize: none;
+    overflow-y: hidden;
 }
 
 .note-add form input:focus,

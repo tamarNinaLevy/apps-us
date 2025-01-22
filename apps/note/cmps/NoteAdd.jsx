@@ -39,6 +39,13 @@ export function NoteAdd({ handleOnAddNote }) {
         });
     }
 
+    const handleKeyDown = (event) => {
+        const { key, metaKey, ctrlKey } = event
+        if (key === 'Enter' && (ctrlKey || metaKey)) {
+            handleAddNote(event)
+            return
+        }
+    }
 
     const handleTypeChange = (type) => {
         const emptyNote = noteService.getEmptyNote(type)
@@ -65,6 +72,7 @@ export function NoteAdd({ handleOnAddNote }) {
         }
     }
 
+
     useEffect(() => {
         if (isOpen) {
             window.addEventListener("click", handleClickOutside);
@@ -89,6 +97,8 @@ export function NoteAdd({ handleOnAddNote }) {
                     />
                 )}
                 <textarea
+                    onKeyDown={handleKeyDown}
+                    rows="1"
                     onClick={() => setIsOpen(true)}
                     name={selectedType === "NoteTxt" ? "txt" : "todos"}
                     placeholder={

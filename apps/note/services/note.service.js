@@ -84,7 +84,7 @@ function _createNote({ type, isPinned = false }) {
                 },
             };
         default:
-            return baseNote;
+            return baseNote
     }
 }
 
