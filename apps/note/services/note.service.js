@@ -35,45 +35,12 @@ function _createNotes() {
     let notes = loadFromStorage(NOTE_KEY)
     if (!notes || !notes.length) {
         const notes = [
-            {
-                id: 'n101',
-                createdAt: 1112222,
-                type: 'NoteTxt',
-                isPinned: true,
-                style: {
-                    backgroundColor: '#00d'
-                },
-                info: {
-                    txt: 'Fullstack Me Baby!'
-                }
-            },
-            {
-                id: 'n102',
-                createdAt: 1112223,
-                type: 'NoteImg',
-                isPinned: false,
-                info: {
-                    url: 'http://some-img/me',
-                    title: 'Bobi and Me'
-                },
-                style: {
-                    backgroundColor: '#00d'
-                }
-            },
-            {
-                id: 'n103',
-                createdAt: 1112224,
-                type: 'NoteTodos',
-                isPinned: false,
-                info: {
-                    title: 'Get my stuff together',
-                    todos: [
-                        { txt: 'Driving license', doneAt: null },
-                        { txt: 'Coding power', doneAt: 187111111 }
-                    ]
-                }
-            }
-        ]
+            _createNote({ type: "NoteTxt", isPinned: true }),
+            _createNote({ type: "NoteImg", isPinned: false }),
+            _createNote({ type: "NoteTodos", isPinned: false }),
+            _createNote({ type: "NoteTxt", isPinned: false }),
+            _createNote({ type: "NoteImg", isPinned: true }),
+            _createNote({ type: "NoteTodos", isPinned: true })]
         saveToStorage(NOTE_KEY, notes)
     }
 }
