@@ -1,10 +1,35 @@
+.note-add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
 .note-add form {
     display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    border: 1px black solid;
-    max-width: fit-content;
-    max-height: fit-content;
-    padding: 1rem;
-    border-radius: 25px;
+    flex-direction: column;
+    border: 1px rgba(0, 0, 0, 0.425) solid;
+    border-radius: 10px;
+    flex: 0 1 600px;
+    overflow: hidden;
+    box-shadow: 0px 0.25rem 1rem rgba(0, 0, 0, 0.425);
+}
+
+.note-add form input[name="txt"] {
+    border: 0;
+}
+
+.note-add form input {
+    border: 0;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+}
+
+.note-add form input:focus {
+    border: 0;
+    outline: 0;
+}
+
+.note-add form .actions {
+    padding: 0.5rem 1rem;
 }

@@ -1,7 +1,1 @@
  /* note list */
-
- .note-list {
-     display: flex;
-     list-style-type: none;
-     gap: 2rem;
- }

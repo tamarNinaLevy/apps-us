@@ -1,9 +1,11 @@
 import { noteService } from "../services/note.service.js";
-const { useState } = React;
+const { useState, useRef, useEffect } = React
 
 export function NoteAdd({ handleOnAddNote }) {
     const [newNote, setNewNote] = useState(() => noteService.getEmptyNote());
     const [selectedType, setSelectedType] = useState('NoteTxt'); // Default to text note
+    const [isOpen, setIsOpen] = useState(false)
+    const cmpRef = useRef(null)
 
     const handleChange = ({ target }) => {
         const field = target.name;
@@ -41,8 +43,7 @@ export function NoteAdd({ handleOnAddNote }) {
 
             return updatedNote;
         });
-    };
-
+    }
 
     const handleTypeChange = (event) => {
         const type = event.target.value
@@ -55,82 +56,127 @@ export function NoteAdd({ handleOnAddNote }) {
     const handleAddNote = (event) => {
         event.preventDefault()
         noteService.save(newNote).then(() => {
-            setNewNote(noteService.getEmptyNote(selectedType));
+            setNewNote(noteService.getEmptyNote(selectedType))
             handleOnAddNote()
+            setIsOpen(false)
         })
     }
+    const handleClickOutside = (event) => {
+        console.log(cmpRef.current)
+        if (cmpRef.current && !cmpRef.current.contains(event.target)) {
+            setIsOpen(false)
+            if (newNote.info.txt) {
+                handleAddNote(event)
+            }
+        }
+    }
+
+    useEffect(() => {
+        if (isOpen) {
+            window.addEventListener('click', handleClickOutside)
+        } else {
+            window.removeEventListener('click', handleClickOutside)
+        }
+        return () => {
+            window.removeEventListener('click', handleClickOutside)
+        }
+    }, [isOpen])
+
+    // return (
+    //     <div ref={cmpRef} className="note-add">
+    //         <form onSubmit={handleAddNote}>
+    //             {isOpen &&
+    //                 <div>
+    //                     <select value={selectedType} onChange={handleTypeChange}>
+    //                         <option value="NoteTxt">Text Note</option>
+    //                         <option value="NoteImg">Image Note</option>
+    //                         <option value="NoteVideo">Video Note</option>
+    //                         <option value="NoteTodos">Todos Note</option>
+    //                     </select>
+
+    //                     <input
+    //                         type="color"
+    //                         name="style.backgroundColor"
+    //                         value={newNote.style.backgroundColor || '#FFFF00'} // Default to yellow
+    //                         onChange={handleChange}
+    //                     />
+    //                 </div>
+    //             }
+    //             <input onClick={() => { setIsOpen(true) }}
+    //                 required
+    //                 type="text"
+    //                 name="txt"
+    //                 placeholder="Add a text note..."
+    //                 value={newNote.info.txt || ''}
+    //                 onChange={handleChange}
+    //             />
+
+    //             {selectedType === 'NoteImg' && (
+    //                 <input
+    //                     required
+    //                     type="text"
+    //                     name="url"
+    //                     placeholder="Enter image URL..."
+    //                     value={newNote.info.url || ''}
+    //                     onChange={handleChange}
+    //                 />
+    //             )}
+
+    //             {selectedType === 'NoteVideo' && (
+    //                 <input
+    //                     required
+    //                     type="text"
+    //                     name="url"
+    //                     placeholder="Enter video URL..."
+    //                     value={newNote.info.url || ''}
+    //                     onChange={handleChange}
+    //                 />
+    //             )}
+
+    //             {selectedType === 'NoteTodos' && (
+    //                 <textarea
+    //                     required
+    //                     name="todos"
+    //                     placeholder="Enter todos (comma-separated)..."
+    //                     value={(newNote.info.todos && newNote.info.todos.map((todo) => todo.txt).join(', ')) || ''}
+    //                     onChange={(e) => {
+    //                         const todos = e.target.value.split(',').map((txt) => ({ txt: txt.trim(), doneAt: null }))
+    //                         setNewNote((prevNote) => ({
+    //                             ...prevNote,
+    //                             info: { ...prevNote.info, todos },
+    //                         }));
+    //                     }}
+    //                 />
+    //             )}
+    //         </form>
+    //     </div>
+    // )
+
     return (
-        <div className="note-add">
+        <div ref={cmpRef} className="note-add">
             <form onSubmit={handleAddNote}>
-                {/* Note Type Selector */}
-                <select value={selectedType} onChange={handleTypeChange}>
-                    <option value="NoteTxt">Text Note</option>
-                    <option value="NoteImg">Image Note</option>
-                    <option value="NoteVideo">Video Note</option>
-                    <option value="NoteTodos">Todos Note</option>
-                </select>
-
-                {/* Background Color Input */}
-                <input
-                    type="color"
-                    name="style.backgroundColor"
-                    value={newNote.style.backgroundColor || '#FFFF00'} // Default to yellow
+                {isOpen &&
+                    <input type="text"
+                        name="title"
+                        placeholder="Title"
+                        onChange={handleChange}
+                        value={newNote.info.title || ''} />
+                }
+                <input onClick={() => { setIsOpen(true) }}
+                    required
+                    type="text"
+                    name="txt"
+                    placeholder="Take a note..."
+                    value={newNote.info.txt || ''}
                     onChange={handleChange}
-                    style={{ margin: '10px 0' }}
                 />
-
-                {/* Dynamic Input Rendering */}
-                {selectedType === 'NoteTxt' && (
-                    <input
-                        required
-                        type="text"
-                        name="txt"
-                        placeholder="Add a text note..."
-                        value={newNote.info.txt || ''}
-                        onChange={handleChange}
-                    />
-                )}
-
-                {selectedType === 'NoteImg' && (
-                    <input
-                        required
-                        type="text"
-                        name="url"
-                        placeholder="Enter image URL..."
-                        value={newNote.info.url || ''}
-                        onChange={handleChange}
-                    />
-                )}
-
-                {selectedType === 'NoteVideo' && (
-                    <input
-                        required
-                        type="text"
-                        name="url"
-                        placeholder="Enter video URL..."
-                        value={newNote.info.url || ''}
-                        onChange={handleChange}
-                    />
-                )}
-
-                {selectedType === 'NoteTodos' && (
-                    <textarea
-                        required
-                        name="todos"
-                        placeholder="Enter todos (comma-separated)..."
-                        value={(newNote.info.todos && newNote.info.todos.map((todo) => todo.txt).join(', ')) || ''}
-                        onChange={(e) => {
-                            const todos = e.target.value.split(',').map((txt) => ({ txt: txt.trim(), doneAt: null }))
-                            setNewNote((prevNote) => ({
-                                ...prevNote,
-                                info: { ...prevNote.info, todos },
-                            }));
-                        }}
-                    />
-                )}
-
-                <button>Add Note</button>
+                {isOpen &&
+                    <div className="actions">
+                        actions
+                    </div>}
             </form>
         </div>
+
+
     )
 }
