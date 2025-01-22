@@ -17,7 +17,7 @@ export function NotePreview({ note, handleOnRemoveNote }) {
     if (!NoteComponent) return <div>Unknown Note Type: {note.type}</div>;
 
     return (
-        <div className="note-preview">
+        <div className="note-preview" style={note.style}>
             <NoteComponent info={note.info} />
             <button onClick={handleOnRemoveNote}>x</button>
         </div>

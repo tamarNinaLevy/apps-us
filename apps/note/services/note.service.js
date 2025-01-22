@@ -32,7 +32,6 @@ function save(note) {
 }
 
 function _createNotes() {
-    console.log('hi')
     let notes = loadFromStorage(NOTE_KEY)
     if (!notes || !notes.length) {
         const notes = [
@@ -87,7 +86,7 @@ function getEmptyNote(type = 'NoteTxt') {
                 type: 'NoteTxt',
                 isPinned: false,
                 style: {
-                    backgroundColor: '#fff',
+                    backgroundColor: '#FFFF00',
                 },
                 info: {
                     txt: '',
@@ -99,7 +98,7 @@ function getEmptyNote(type = 'NoteTxt') {
                 type: 'NoteTodos',
                 isPinned: false,
                 style: {
-                    backgroundColor: '#fff',
+                    backgroundColor: '#FFFF00',
                 },
                 info: {
                     title: '',
@@ -112,7 +111,7 @@ function getEmptyNote(type = 'NoteTxt') {
                 type: 'NoteImg',
                 isPinned: false,
                 style: {
-                    backgroundColor: '#fff',
+                    backgroundColor: '#FFFF00',
                 },
                 info: {
                     url: '',
@@ -125,7 +124,7 @@ function getEmptyNote(type = 'NoteTxt') {
                 type: 'NoteVideo',
                 isPinned: false,
                 style: {
-                    backgroundColor: '#fff',
+                    backgroundColor: '#FFFF00',
                 },
                 info: {
                     url: '',
