@@ -10,9 +10,24 @@
 //      to: 'user@appsus.com'
 // }
 
+import { mailService } from "../services/mail.service.js";
 import { MailPreview } from "./MailPreview.jsx"
 
 export function MailList({ mails }) {
+
+    function onClickMark(event, mail) {
+        console.log("event: ", event);
+        const key = event.target.name;
+        mail[key] = !mail.isRead
+        mailService.save(mail)
+            .then((res) => {
+                alert('Success')
+            })
+            .catch(err => {
+                console.log('ERR: ', err)
+                alert('Error occurred')
+            })
+    }
 
     return <div className="mail-list">
         {mails.map((mail) => {
@@ -21,6 +36,7 @@ export function MailList({ mails }) {
                     key={mail.id}
                     mail={mail}
                 />
+                <input type="button" id={mail.id} name='isRead' value={mail.isRead ? 'Unmark' : 'Mark as read'} onClick={(event) => onClickMark(event, mail)} />
             </div>
         })}
     </div>
