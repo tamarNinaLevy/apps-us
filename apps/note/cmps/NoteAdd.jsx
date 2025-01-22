@@ -1,43 +1,37 @@
-import { noteService } from "../services/note.service.js";
+import { noteService } from "../services/note.service.js"
 const { useState, useRef, useEffect } = React
 
 export function NoteAdd({ handleOnAddNote }) {
-    const [newNote, setNewNote] = useState(() => noteService.getEmptyNote());
-    const [selectedType, setSelectedType] = useState('NoteTxt'); // Default to text note
+    const [newNote, setNewNote] = useState(() => noteService.getEmptyNote())
+    const [selectedType, setSelectedType] = useState(newNote.type)
     const [isOpen, setIsOpen] = useState(false)
     const cmpRef = useRef(null)
 
     const handleChange = ({ target }) => {
         const field = target.name;
-        let value;
-
-        // Handle different input types
-        if (target.type === 'checkbox') {
-            value = target.checked; // For checkboxes
-        } else if (target.type === 'number' || target.type === 'range') {
-            value = +target.value; // Convert number inputs
-        } else {
-            value = target.value; // Default case
-        }
+        let value = target.value;
 
         setNewNote((prevNote) => {
             const updatedNote = { ...prevNote };
 
-            if (field.includes('.')) {
+            if (field === "todos") {
+                // Update todos as a single text string to allow backspace and space
+                updatedNote.info.todosText = value; // Temporarily store the raw string input
+
+                // Convert the string into an array of todo objects when saving or updating
+                updatedNote.info.todos = value.split(",").map((txt) => ({ txt: txt.trim() }));
+            } else if (field.includes(".")) {
                 // Handle nested fields (e.g., 'style.backgroundColor')
-                const keys = field.split('.');
+                const keys = field.split(".");
                 let nestedObj = updatedNote;
 
-                // Traverse to the last key in the path
                 keys.slice(0, -1).forEach((key) => {
-                    if (!nestedObj[key]) nestedObj[key] = {}; // Ensure the path exists
+                    if (!nestedObj[key]) nestedObj[key] = {};
                     nestedObj = nestedObj[key];
                 });
 
-                // Update the final key with the new value
                 nestedObj[keys[keys.length - 1]] = value;
             } else {
-                // Handle top-level fields
                 updatedNote.info[field] = value;
             }
 
@@ -45,71 +39,97 @@ export function NoteAdd({ handleOnAddNote }) {
         });
     }
 
-    const handleTypeChange = (event) => {
-        const type = event.target.value
-        setSelectedType(type)
+
+    const handleTypeChange = (type) => {
         const emptyNote = noteService.getEmptyNote(type)
         setNewNote(emptyNote)
+        setSelectedType(type)
     }
 
     const handleAddNote = (event) => {
         event.preventDefault()
         noteService.save(newNote).then(() => {
-            setNewNote(noteService.getEmptyNote(selectedType))
-            handleOnAddNote()
+            setNewNote(noteService.getEmptyNote())
             setIsOpen(false)
+            handleOnAddNote()
         })
     }
+
     const handleClickOutside = (event) => {
         if (cmpRef.current && !cmpRef.current.contains(event.target)) {
             setIsOpen(false)
-            if (newNote.info.txt) {
+            if (newNote.info.txt || (Array.isArray(newNote.info.todos) && newNote.info.todos.length > 0)) {
                 handleAddNote(event)
             }
         }
-    }
+    };
 
     useEffect(() => {
         if (isOpen) {
-            window.addEventListener('click', handleClickOutside)
+            window.addEventListener("click", handleClickOutside);
         } else {
-            window.removeEventListener('click', handleClickOutside)
+            window.removeEventListener("click", handleClickOutside);
         }
         return () => {
-            window.removeEventListener('click', handleClickOutside)
+            window.removeEventListener("click", handleClickOutside);
         }
     }, [isOpen])
 
     return (
         <div ref={cmpRef} className="note-add">
             <form onSubmit={handleAddNote}>
-                {isOpen &&
-                    <input type="text"
+                {isOpen && (
+                    <input
+                        type="text"
                         name="title"
                         placeholder="Title"
                         onChange={handleChange}
-                        value={newNote.info.title || ''} />
-                }
-                <input onClick={() => { setIsOpen(true) }}
+                        value={newNote.info.title || ""}
+                    />
+                )}
+                <input
+                    onClick={() => setIsOpen(true)}
                     required
                     type="text"
-                    name="txt"
-                    placeholder="Take a note..."
-                    value={newNote.info.txt || ''}
+                    name={selectedType === "NoteTxt" ? "txt" : "todos"}
+                    placeholder={
+                        selectedType === "NoteTxt"
+                            ? "Take a note..."
+                            : "Enter items (comma-separated)..."
+                    }
+                    value={
+                        selectedType === "NoteTxt"
+                            ? newNote.info.txt || ""
+                            : newNote.info.todosText || ""
+                    }
                     onChange={handleChange}
                 />
-                {isOpen &&
+                {isOpen && (
                     <div className="actions">
-                        <input type="color"
+                        <button
+                            type="button"
+                            className={`type-btn ${selectedType === "NoteTxt" ? "active" : ""}`}
+                            onClick={() => handleTypeChange("NoteTxt")}
+                        >
+                            📝
+                        </button>
+                        <button
+                            type="button"
+                            className={`type-btn ${selectedType === "NoteTodos" ? "active" : ""}`}
+                            onClick={() => handleTypeChange("NoteTodos")}
+                        >
+                            ✅
+                        </button>
+                        <input
+                            type="color"
                             name="style.backgroundColor"
                             onChange={handleChange}
-                            value={newNote.style.backgroundColor || ''}
+                            value={newNote.style.backgroundColor || ""}
                         />
-                    </div>}
-                <button type="submit" style={{ display: 'none' }}></button> {/* Invisible button */}
+                    </div>
+                )}
+                <button type="submit" style={{ display: "none" }}></button> {/* Invisible button */}
             </form>
         </div>
-
-
     )
 }
