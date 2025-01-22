@@ -21,3 +21,11 @@
 .grid {
     display: grid;
 }
+
+.bold-font {
+    font-weight: 600;
+}
+
+.span-margin {
+    margin: 5px;
+}
