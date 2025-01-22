@@ -62,7 +62,6 @@ export function NoteAdd({ handleOnAddNote }) {
         })
     }
     const handleClickOutside = (event) => {
-        console.log(cmpRef.current)
         if (cmpRef.current && !cmpRef.current.contains(event.target)) {
             setIsOpen(false)
             if (newNote.info.txt) {
@@ -81,76 +80,6 @@ export function NoteAdd({ handleOnAddNote }) {
             window.removeEventListener('click', handleClickOutside)
         }
     }, [isOpen])
-
-    // return (
-    //     <div ref={cmpRef} className="note-add">
-    //         <form onSubmit={handleAddNote}>
-    //             {isOpen &&
-    //                 <div>
-    //                     <select value={selectedType} onChange={handleTypeChange}>
-    //                         <option value="NoteTxt">Text Note</option>
-    //                         <option value="NoteImg">Image Note</option>
-    //                         <option value="NoteVideo">Video Note</option>
-    //                         <option value="NoteTodos">Todos Note</option>
-    //                     </select>
-
-    //                     <input
-    //                         type="color"
-    //                         name="style.backgroundColor"
-    //                         value={newNote.style.backgroundColor || '#FFFF00'} // Default to yellow
-    //                         onChange={handleChange}
-    //                     />
-    //                 </div>
-    //             }
-    //             <input onClick={() => { setIsOpen(true) }}
-    //                 required
-    //                 type="text"
-    //                 name="txt"
-    //                 placeholder="Add a text note..."
-    //                 value={newNote.info.txt || ''}
-    //                 onChange={handleChange}
-    //             />
-
-    //             {selectedType === 'NoteImg' && (
-    //                 <input
-    //                     required
-    //                     type="text"
-    //                     name="url"
-    //                     placeholder="Enter image URL..."
-    //                     value={newNote.info.url || ''}
-    //                     onChange={handleChange}
-    //                 />
-    //             )}
-
-    //             {selectedType === 'NoteVideo' && (
-    //                 <input
-    //                     required
-    //                     type="text"
-    //                     name="url"
-    //                     placeholder="Enter video URL..."
-    //                     value={newNote.info.url || ''}
-    //                     onChange={handleChange}
-    //                 />
-    //             )}
-
-    //             {selectedType === 'NoteTodos' && (
-    //                 <textarea
-    //                     required
-    //                     name="todos"
-    //                     placeholder="Enter todos (comma-separated)..."
-    //                     value={(newNote.info.todos && newNote.info.todos.map((todo) => todo.txt).join(', ')) || ''}
-    //                     onChange={(e) => {
-    //                         const todos = e.target.value.split(',').map((txt) => ({ txt: txt.trim(), doneAt: null }))
-    //                         setNewNote((prevNote) => ({
-    //                             ...prevNote,
-    //                             info: { ...prevNote.info, todos },
-    //                         }));
-    //                     }}
-    //                 />
-    //             )}
-    //         </form>
-    //     </div>
-    // )
 
     return (
         <div ref={cmpRef} className="note-add">
@@ -174,6 +103,7 @@ export function NoteAdd({ handleOnAddNote }) {
                     <div className="actions">
                         actions
                     </div>}
+                <button type="submit" style={{ display: 'none' }}></button> {/* Invisible button */}
             </form>
         </div>
 
