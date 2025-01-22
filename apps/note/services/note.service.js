@@ -5,7 +5,8 @@ export const noteService = {
     get,
     query,
     remove,
-    save
+    save,
+    getEmptyNote
 }
 const NOTE_KEY = 'noteDB'
 _createNotes()
@@ -75,5 +76,18 @@ function _createNotes() {
             }
         ]
         saveToStorage(NOTE_KEY, notes)
+    }
+}
+function getEmptyNote() {
+    return {
+        createdAt: Date.now(),
+        type: 'NoteTxt',
+        isPinned: false,
+        style: {
+            backgroundColor: '#fff',
+        },
+        info: {
+            txt: '',
+        },
     }
 }
