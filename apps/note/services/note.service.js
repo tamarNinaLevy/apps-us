@@ -78,16 +78,61 @@ function _createNotes() {
         saveToStorage(NOTE_KEY, notes)
     }
 }
-function getEmptyNote() {
-    return {
-        createdAt: Date.now(),
-        type: 'NoteTxt',
-        isPinned: false,
-        style: {
-            backgroundColor: '#fff',
-        },
-        info: {
-            txt: '',
-        },
+
+function getEmptyNote(type = 'NoteTxt') {
+    switch (type) {
+        case 'NoteTxt':
+            return {
+                createdAt: Date.now(),
+                type: 'NoteTxt',
+                isPinned: false,
+                style: {
+                    backgroundColor: '#fff',
+                },
+                info: {
+                    txt: '',
+                },
+            };
+        case 'NoteTodos':
+            return {
+                createdAt: Date.now(),
+                type: 'NoteTodos',
+                isPinned: false,
+                style: {
+                    backgroundColor: '#fff',
+                },
+                info: {
+                    title: '',
+                    todos: [],
+                },
+            };
+        case 'NoteImg':
+            return {
+                createdAt: Date.now(),
+                type: 'NoteImg',
+                isPinned: false,
+                style: {
+                    backgroundColor: '#fff',
+                },
+                info: {
+                    url: '',
+                    title: '',
+                },
+            };
+        case 'NoteVideo':
+            return {
+                createdAt: Date.now(),
+                type: 'NoteVideo',
+                isPinned: false,
+                style: {
+                    backgroundColor: '#fff',
+                },
+                info: {
+                    url: '',
+                    title: '',
+                },
+            };
+        default:
+            throw new Error('Unknown note type');
     }
 }
