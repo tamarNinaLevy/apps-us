@@ -31,7 +31,7 @@ export function MailList({ mails }) {
 
     return <div className="mail-list">
         {mails.map((mail) => {
-            return <div className="mail-preview-container">
+            return <div className="mail-preview-container" key={mail.id}>
                 <MailPreview
                     key={mail.id}
                     mail={mail}

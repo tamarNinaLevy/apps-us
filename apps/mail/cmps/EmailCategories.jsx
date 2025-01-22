@@ -1,13 +1,11 @@
-export function EmailCategories() {
+export function EmailCategories({ categories }) {
 
-    const cat = ['read', 'unread', 'trash']
-
+    const names = ['read']
     return <div className="categories-list flex column align-center justify-center">
-        
         {
-            cat.map((cat) => {
-                return <div className="category">
-                    {cat}
+            names.map((cat) => {
+                return <div className="category" key={cat}>
+                    <span>{cat}</span><span>{categories[cat]}</span>
                 </div>
             })
         }

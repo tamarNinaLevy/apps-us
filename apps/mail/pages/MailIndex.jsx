@@ -9,13 +9,22 @@ import { EmailCategories } from '../cmps/EmailCategories.jsx'
 export function MailIndex() {
 
     const [mails, setMails] = useState([])
+    const [categories, setCategories] = useState({
+        read: 0,
+    })
 
     useEffect(() => {
         loadMails()
     }, [])
 
+    useEffect(() => {
+        setCategories(prev => {
+            return { ...prev, read: mailService.countUnraed(mails) }
+        })
+    }, [mails])
+
     function loadMails() {
-        console.log('Loading')
+        console.log('Loading...')
         mailService.query()
             .then(setMails)
             .catch(err => {
@@ -27,7 +36,7 @@ export function MailIndex() {
         <MailHeader />
         <div className='list-categories-container'>
             {mails.length > 0 && <MailList mails={mails} />}
-            <EmailCategories />
+            <EmailCategories categories={categories} />
         </div>
     </div>
 }
