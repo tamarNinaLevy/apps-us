@@ -48,7 +48,6 @@ export function NoteAdd({ handleOnAddNote }) {
     const handleTypeChange = (event) => {
         const type = event.target.value
         setSelectedType(type)
-
         const emptyNote = noteService.getEmptyNote(type)
         setNewNote(emptyNote)
     }
@@ -101,7 +100,11 @@ export function NoteAdd({ handleOnAddNote }) {
                 />
                 {isOpen &&
                     <div className="actions">
-                        actions
+                        <input type="color"
+                            name="style.backgroundColor"
+                            onChange={handleChange}
+                            value={newNote.style.backgroundColor || ''}
+                        />
                     </div>}
                 <button type="submit" style={{ display: 'none' }}></button> {/* Invisible button */}
             </form>

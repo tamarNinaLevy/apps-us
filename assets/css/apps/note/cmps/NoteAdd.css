@@ -19,6 +19,10 @@
     border: 0;
 }
 
+.note-add form input[name="color"] {
+    border: 0;
+}
+
 .note-add form input {
     border: 0;
     padding: 0.5rem 1rem;
