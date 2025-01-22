@@ -85,8 +85,8 @@ export function NoteAdd({ handleOnAddNote }) {
     }, [isOpen])
 
     return (
-        <div ref={cmpRef} className="note-add">
-            <form onSubmit={handleAddNote}>
+        <div ref={cmpRef} className="note-add" >
+            <form onSubmit={handleAddNote}  >
                 {isOpen && (
                     <input
                         type="text"
@@ -133,7 +133,7 @@ export function NoteAdd({ handleOnAddNote }) {
                             type="color"
                             name="style.backgroundColor"
                             onChange={handleChange}
-                            value={newNote.style.backgroundColor || ""}
+                            value={newNote.style.backgroundColor || "#ffffff"}
                         />
                     </div>
                 )}

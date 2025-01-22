@@ -96,7 +96,7 @@ function getEmptyNote(type = 'NoteTxt') {
                 type: 'NoteTxt',
                 isPinned: false,
                 style: {
-                    backgroundColor: '#FFFF00',
+                    backgroundColor: '#ffffff',
                 },
                 info: {
                     txt: '',
@@ -108,7 +108,7 @@ function getEmptyNote(type = 'NoteTxt') {
                 type: 'NoteTodos',
                 isPinned: false,
                 style: {
-                    backgroundColor: '#FFFF00',
+                    backgroundColor: '#ffffff',
                 },
                 info: {
                     title: '',
@@ -121,7 +121,7 @@ function getEmptyNote(type = 'NoteTxt') {
                 type: 'NoteImg',
                 isPinned: false,
                 style: {
-                    backgroundColor: '#FFFF00',
+                    backgroundColor: '#ffffff',
                 },
                 info: {
                     url: '',
@@ -134,7 +134,7 @@ function getEmptyNote(type = 'NoteTxt') {
                 type: 'NoteVideo',
                 isPinned: false,
                 style: {
-                    backgroundColor: '#FFFF00',
+                    backgroundColor: '#ffffff',
                 },
                 info: {
                     url: '',
