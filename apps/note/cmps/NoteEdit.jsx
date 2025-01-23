@@ -5,7 +5,6 @@ const { useState, useRef, useEffect } = React
 
 export function NoteEdit({ note = noteService.getEmptyNote(), handleSaveNote }) {
     const [noteToEdit, setNoteToEdit] = useState(note)
-    const [selectedType, setSelectedType] = useState(noteToEdit.type)
     const [isOpen, setIsOpen] = useState(false)
     const cmpRef = useRef(null)
 
@@ -47,6 +46,7 @@ export function NoteEdit({ note = noteService.getEmptyNote(), handleSaveNote }) 
 
         if (noteToEdit.type === 'NoteTxt' && !noteToEdit.info.txt || noteToEdit.type === 'NoteTodos' && noteToEdit.info.todos.length === 0) {
             setIsOpen(false)
+            setNoteToEdit(noteService.getEmptyNote())
             return
         }
         noteService.save(noteToEdit).then(() => {
@@ -54,7 +54,6 @@ export function NoteEdit({ note = noteService.getEmptyNote(), handleSaveNote }) 
                 setNoteToEdit(noteService.getEmptyNote())
             }
             handleSaveNote(noteToEdit)
-            setSelectedType('NoteTxt')
             setIsOpen(false)
         })
 
@@ -72,7 +71,6 @@ export function NoteEdit({ note = noteService.getEmptyNote(), handleSaveNote }) 
     const handleTypeChange = (type) => {
         const emptyNote = noteService.getEmptyNote(type)
         setNoteToEdit(emptyNote)
-        setSelectedType(type)
         setIsOpen(true)
 
     }
@@ -80,8 +78,6 @@ export function NoteEdit({ note = noteService.getEmptyNote(), handleSaveNote }) 
     const handleClickOutside = (event) => {
         if (cmpRef.current && !cmpRef.current.contains(event.target)) {
             onSaveNote(event)
-            setSelectedType('NoteTxt')
-
         }
     }
 
@@ -116,7 +112,7 @@ export function NoteEdit({ note = noteService.getEmptyNote(), handleSaveNote }) 
             <div className={`floating-actions ${isOpen ? 'hidden' : ''}`}>
                 <button
                     type="button"
-                    className={`type-btn ${selectedType === "NoteTodos" ? "active" : ""}`}
+                    className={`type-btn ${noteToEdit.type === "NoteTodos" ? "active" : ""}`}
                     onClick={() => handleTypeChange("NoteTodos")}
                 >
                     <span className="material-symbols-outlined">
@@ -128,14 +124,14 @@ export function NoteEdit({ note = noteService.getEmptyNote(), handleSaveNote }) 
                 onKeyDown={handleKeyDown}
                 rows="1"
                 onClick={() => setIsOpen(true)}
-                name={selectedType === "NoteTxt" ? "txt" : "todos"}
+                name={noteToEdit.type === "NoteTxt" ? "txt" : "todos"}
                 placeholder={
-                    selectedType === "NoteTxt"
+                    noteToEdit.type === "NoteTxt"
                         ? "Take a note..."
                         : "Enter items (comma-separated)..."
                 }
                 value={
-                    selectedType === "NoteTxt"
+                    noteToEdit.type === "NoteTxt"
                         ? noteToEdit.info.txt || ""
                         : noteToEdit.info.todosText || ""
                 }
