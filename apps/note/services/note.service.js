@@ -1,11 +1,12 @@
 // note service
 import { storageService } from '../../../services/async-storage.service.js'
-import { loadFromStorage, saveToStorage } from '../../../services/util.service.js'
+import { loadFromStorage, saveToStorage, makeId, makeLorem, getRandomColor, getRandomIntInclusive } from '../../../services/util.service.js'
 export const noteService = {
     get,
     query,
     remove,
-    save
+    save,
+    getEmptyNote
 }
 const NOTE_KEY = 'noteDB'
 _createNotes()
@@ -31,49 +32,116 @@ function save(note) {
 }
 
 function _createNotes() {
-    console.log('hi')
     let notes = loadFromStorage(NOTE_KEY)
     if (!notes || !notes.length) {
         const notes = [
-            {
-                id: 'n101',
-                createdAt: 1112222,
+            _createNote({ type: "NoteTxt", isPinned: true }),
+            _createNote({ type: "NoteImg", isPinned: false }),
+            _createNote({ type: "NoteTodos", isPinned: false }),
+            _createNote({ type: "NoteTxt", isPinned: false }),
+            _createNote({ type: "NoteImg", isPinned: true }),
+            _createNote({ type: "NoteTodos", isPinned: true })]
+        saveToStorage(NOTE_KEY, notes)
+    }
+}
+
+function _createNote({ type, isPinned = false }) {
+    const baseNote = {
+        id: makeId(),
+        createdAt: Date.now(),
+        type,
+        isPinned,
+        style: {
+            backgroundColor: getRandomColor(),
+        },
+    };
+
+    switch (type) {
+        case "NoteTxt":
+            return {
+                ...baseNote,
+                info: {
+                    txt: makeLorem(20),
+                },
+            };
+        case "NoteImg":
+            return {
+                ...baseNote,
+                info: {
+                    url: `https://picsum.photos/200/300?random=${makeId(3)}`,
+                    title: makeLorem(3),
+                },
+            };
+        case "NoteTodos":
+            return {
+                ...baseNote,
+                info: {
+                    title: makeLorem(5),
+                    todos: Array.from({ length: 3 }, () => ({
+                        txt: makeLorem(2),
+                        doneAt: Math.random() > 0.5 ? Date.now() - getRandomIntInclusive(1, 10) * 86400000 : null,
+                    })),
+                },
+            };
+        default:
+            return baseNote
+    }
+}
+
+function getEmptyNote(type = 'NoteTxt') {
+    switch (type) {
+        case 'NoteTxt':
+            return {
+                createdAt: Date.now(),
                 type: 'NoteTxt',
-                isPinned: true,
-                style: {
-                    backgroundColor: '#00d'
-                },
-                info: {
-                    txt: 'Fullstack Me Baby!'
-                }
-            },
-            {
-                id: 'n102',
-                createdAt: 1112223,
-                type: 'NoteImg',
                 isPinned: false,
-                info: {
-                    url: 'http://some-img/me',
-                    title: 'Bobi and Me'
-                },
                 style: {
-                    backgroundColor: '#00d'
-                }
-            },
-            {
-                id: 'n103',
-                createdAt: 1112224,
+                    backgroundColor: '#ffffff',
+                },
+                info: {
+                    txt: '',
+                },
+            };
+        case 'NoteTodos':
+            return {
+                createdAt: Date.now(),
                 type: 'NoteTodos',
                 isPinned: false,
+                style: {
+                    backgroundColor: '#ffffff',
+                },
                 info: {
-                    title: 'Get my stuff together',
-                    todos: [
-                        { txt: 'Driving license', doneAt: null },
-                        { txt: 'Coding power', doneAt: 187111111 }
-                    ]
-                }
-            }
-        ]
-        saveToStorage(NOTE_KEY, notes)
+                    title: '',
+                    todos: [],
+                },
+            };
+        case 'NoteImg':
+            return {
+                createdAt: Date.now(),
+                type: 'NoteImg',
+                isPinned: false,
+                style: {
+                    backgroundColor: '#ffffff',
+                },
+                info: {
+                    url: '',
+                    title: '',
+                },
+            };
+        case 'NoteVideo':
+            return {
+                createdAt: Date.now(),
+                type: 'NoteVideo',
+                isPinned: false,
+                style: {
+                    backgroundColor: '#ffffff',
+                },
+                info: {
+                    url: '',
+                    title: '',
+                },
+            };
+        default:
+            throw new Error('Unknown note type');
     }
 }

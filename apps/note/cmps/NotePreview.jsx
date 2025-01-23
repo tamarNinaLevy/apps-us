@@ -10,15 +10,15 @@ const dynamicComponents = {
     NoteTodos,
 }
 
-export function NotePreview({ note }) {
-    const formattedType = note.type.charAt(0).toUpperCase() + note.type.slice(1);
-    const NoteComponent = dynamicComponents[formattedType]
+export function NotePreview({ note, handleOnRemoveNote }) {
+    const NoteComponent = dynamicComponents[note.type]
 
     if (!NoteComponent) return <div>Unknown Note Type: {note.type}</div>;
 
     return (
-        <div className="note-preview">
+        <div className="note-preview" style={note.style}>
             <NoteComponent info={note.info} />
+            <button onClick={handleOnRemoveNote}>x</button>
         </div>
     )
 }

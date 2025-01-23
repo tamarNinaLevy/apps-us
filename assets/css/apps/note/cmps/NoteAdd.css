@@ -1,0 +1,41 @@
+.note-add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.note-add form {
+    display: flex;
+    flex-direction: column;
+    border: 1px rgba(0, 0, 0, 0.425) solid;
+    border-radius: 10px;
+    flex: 0 1 600px;
+    overflow: hidden;
+    box-shadow: 0px 0.25rem 1rem rgba(0, 0, 0, 0.425);
+}
+
+
+.note-add form input[name="color"] {
+    border: 0;
+}
+
+.note-add form input,
+.note-add form textarea {
+    border: 0;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    height: auto;
+    resize: none;
+    overflow-y: hidden;
+}
+
+.note-add form input:focus,
+.note-add form textarea:focus {
+    border: 0;
+    outline: 0;
+}
+
+.note-add form .actions {
+    padding: 0.5rem 1rem;
+}
