@@ -1,15 +1,3 @@
-// {
-//      id: makeId(),
-//      createdAt: new Date(),
-//      subject: makeLorem(3),
-//      body: makeLorem(5),
-//      isRead: false,
-//      sentAt: new Date(),
-//      removedAt: null,
-//      from: 'momo@momo.com',
-//      to: 'user@appsus.com'
-// }
-
 const { useNavigate } = ReactRouterDOM
 
 import { MailPreview } from "./MailPreview.jsx"
