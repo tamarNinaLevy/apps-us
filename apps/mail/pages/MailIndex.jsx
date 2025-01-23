@@ -1,10 +1,10 @@
 const { useEffect, useState } = React
 
-import { mailService } from '../services/mail.service.js'
-
 import { MailList } from '../cmps/MailList.jsx'
 import { MailHeader } from '../cmps/MailHeader.jsx'
 import { EmailCategories } from '../cmps/EmailCategories.jsx'
+
+import { mailService } from '../services/mail.service.js'
 
 export function MailIndex() {
 
@@ -16,6 +16,9 @@ export function MailIndex() {
 
     useEffect(() => {
         loadMails()
+    }, [])
+
+    useEffect(() => {
         if (selectedMailInfo) {
             onClickMark()
         }
@@ -29,7 +32,9 @@ export function MailIndex() {
 
     function loadMails() {
         mailService.query()
-            .then(setMails)
+            .then((res) => {
+                setMails(res)
+            })
             .catch(err => {
                 console.log('ERR: ', err)
             })
@@ -40,6 +45,7 @@ export function MailIndex() {
             .then(() => {
                 alert('Success')
                 setSelectedMailInfo(null)
+                loadMails()
             })
             .catch(err => {
                 console.log('ERR: ', err)
@@ -55,4 +61,3 @@ export function MailIndex() {
         </div>
     </div>
 }
-

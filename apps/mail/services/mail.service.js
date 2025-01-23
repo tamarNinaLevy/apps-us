@@ -42,9 +42,9 @@ function save(mail) {
 function updatePropInMail(mailId, propName, newVal) {
     return storageService.get(MAIL_KEY, mailId)
         .then(mail => {
-            mail[propName] = newVal
-            save(mail)
-            return mail
+            const copy = {...mail}
+            copy[propName] = newVal
+            return save(copy)
         })
         .catch((err) => {
             return err
