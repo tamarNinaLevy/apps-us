@@ -1,6 +1,7 @@
 const { useState, useEffect } = React
 const { useNavigate } = ReactRouterDOM
 
+import { mailService } from "../services/mail.service.js"
 import { ComposeMail } from "./ComposeMail.jsx"
 import { MailPreview } from "./MailPreview.jsx"
 
@@ -19,8 +20,21 @@ export function MailList({ mails, setSelectedMailInfo, deleteMail, setMails }) {
         navigate(`/view-mail/${id}`)
     }
 
-    function onDelete(id) {
-        deleteMail(id)
+    function onDelete(mailId, removedAt) {
+        if (removedAt) {
+            mailService.remove(mailId)
+                .then((res) => {
+                    setMails(prev => {
+                        return prev.filter((mail) => mail.id !== mailId)
+                    })
+                    alert('Deleted successfully!')
+                })
+                .catch((err) => {
+                    console.log('ERR: ', err);
+                })
+        } else {
+            deleteMail(id)
+        }
     }
 
     function editDraft(mail) {
@@ -50,7 +64,7 @@ export function MailList({ mails, setSelectedMailInfo, deleteMail, setMails }) {
                             onClick={() => editDraft(mail)}
                         />
                 }
-                <input type="button" value={'delete'} onClick={() => onDelete(mail.id)} />
+                <input type="button" value={'delete'} onClick={() => onDelete(mail.id, mail.removedAt)} />
             </div>
         })}
         <ComposeMail
