@@ -2,7 +2,7 @@ const { useEffect, useState } = React
 
 import { MailList } from '../cmps/MailList.jsx'
 import { MailHeader } from '../cmps/MailHeader.jsx'
-import { EmailCategories } from '../cmps/EmailCategories.jsx'
+import { EmailActionsSideBar } from '../cmps/EmailActionsSideBar.jsx'
 
 import { mailService } from '../services/mail.service.js'
 
@@ -57,7 +57,7 @@ export function MailIndex() {
         <MailHeader />
         <div className='list-categories-container'>
             {mails.length > 0 && <MailList mails={mails} setSelectedMailInfo={setSelectedMailInfo} />}
-            <EmailCategories categories={categories} />
+            <EmailActionsSideBar categories={categories} />
         </div>
     </div>
 }
