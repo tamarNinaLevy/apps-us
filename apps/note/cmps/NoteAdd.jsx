@@ -51,17 +51,21 @@ export function NoteAdd({ handleOnAddNote }) {
         const emptyNote = noteService.getEmptyNote(type)
         setNewNote(emptyNote)
         setSelectedType(type)
+        setIsOpen(true)
+
     }
 
     const handleAddNote = (event) => {
         event.preventDefault()
+        const emptyNote = noteService.getEmptyNote()
         if (newNote.info.txt || (Array.isArray(newNote.info.todos) && newNote.info.todos.length > 0)) {
             noteService.save(newNote).then(() => {
-                setNewNote(noteService.getEmptyNote())
+                setNewNote(emptyNote)
                 setIsOpen(false)
                 handleOnAddNote()
             })
         }
+        setSelectedType(emptyNote.type)
     }
 
     const handleClickOutside = (event) => {
@@ -97,6 +101,17 @@ export function NoteAdd({ handleOnAddNote }) {
                         value={newNote.info.title || ""}
                     />
                 )}
+                <div className={`floating-actions ${isOpen ? 'hidden' : ''}`}>
+                    <button
+                        type="button"
+                        className={`type-btn ${selectedType === "NoteTodos" ? "active" : ""}`}
+                        onClick={() => handleTypeChange("NoteTodos")}
+                    >
+                        <span className="material-symbols-outlined">
+                            check_box
+                        </span>
+                    </button>
+                </div>
                 <textarea
                     onKeyDown={handleKeyDown}
                     rows="1"
@@ -116,20 +131,6 @@ export function NoteAdd({ handleOnAddNote }) {
                 />
                 {isOpen && (
                     <div className="actions">
-                        <button
-                            type="button"
-                            className={`type-btn ${selectedType === "NoteTxt" ? "active" : ""}`}
-                            onClick={() => handleTypeChange("NoteTxt")}
-                        >
-                            📝
-                        </button>
-                        <button
-                            type="button"
-                            className={`type-btn ${selectedType === "NoteTodos" ? "active" : ""}`}
-                            onClick={() => handleTypeChange("NoteTodos")}
-                        >
-                            ✅
-                        </button>
                         <input
                             type="color"
                             name="style.backgroundColor"
