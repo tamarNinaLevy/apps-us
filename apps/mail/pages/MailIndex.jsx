@@ -27,7 +27,7 @@ export function MailIndex() {
 
     useEffect(() => {
         loadMails()
-    }, [])
+    }, [filterPageBy])
 
     useEffect(() => {
         if (selectedMailInfo) {
@@ -82,6 +82,7 @@ export function MailIndex() {
                     mails={mails}
                     setSelectedMailInfo={setSelectedMailInfo}
                     deleteMail={deleteMail}
+                    setMails={setMails}
                 />
             }
             <EmailActionsSideBar
