@@ -10,22 +10,12 @@
 //      to: 'user@appsus.com'
 // }
 
-import { mailService } from "../services/mail.service.js";
 import { MailPreview } from "./MailPreview.jsx"
 
-export function MailList({ mails }) {
+export function MailList({ mails, setSelectedMailId }) {
 
-    function onClickMark(event, mail) {
-        const key = event.target.name
-        mail[key] = !mail.isRead
-        mailService.save(mail)
-            .then((res) => {
-                alert('Success')
-            })
-            .catch(err => {
-                console.log('ERR: ', err)
-                alert('Error occurred')
-            })
+    function onClickMark(event, id, newVal) {
+        setSelectedMailId({ mailId: id, propName: event.target.name, newVal })
     }
 
     return <div className="mail-list">
@@ -35,7 +25,7 @@ export function MailList({ mails }) {
                     key={mail.id}
                     mail={mail}
                 />
-                <input type="button" id={mail.id} name='isRead' value={mail.isRead ? 'Unmark' : 'Mark as read'} onClick={(event) => onClickMark(event, mail)} />
+                <input type="button" id={mail.id} name='isRead' value={mail.isRead ? 'Mark as unread' : 'Mark as read'} onClick={(event) => onClickMark(event, mail.id, !mail.isRead)} />
             </div>
         })}
     </div>

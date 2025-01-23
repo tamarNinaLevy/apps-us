@@ -1,6 +1,6 @@
 export function MailPreview({ mail }) {
 
-    const txtBody = mail.body.substring(0, mail.body.length > 15 ? 15 : mail.body.length) + (mail.body.length > 25 ? '...' : '')
+    const txtBody = mail && mail.body && mail.body.substring(0, mail.body.length > 15 ? 15 : mail.body.length) + (mail.body.length > 25 ? '...' : '')
 
     const bold = !mail.isRead ? 'bold-font' : ''
 

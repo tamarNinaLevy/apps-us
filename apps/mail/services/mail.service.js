@@ -9,7 +9,8 @@ export const mailService = {
     get,
     remove,
     save,
-    countUnraed
+    countUnraed,
+    updatePropInMail
 }
 
 function query(filterBy = {}) {
@@ -38,9 +39,20 @@ function save(mail) {
     }
 }
 
+function updatePropInMail(mailId, propName, newVal) {
+    return storageService.get(MAIL_KEY, mailId)
+        .then(mail => {
+            mail[propName] = newVal
+            save(mail)
+            return mail
+        })
+        .catch((err) => {
+            return err
+        })
+}
+
 function countUnraed(mails) {
     const unread = mails.filter((mail) => !mail.isRead)
-    console.log("unread: ", unread);
     return unread.length
 }
 
