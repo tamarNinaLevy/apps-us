@@ -16,7 +16,10 @@ export function NoteTodos({ info, handleOnToggleTodo }) {
                     <li
                         key={idx}
                         style={{ textDecoration: todo.doneAt ? 'line-through' : 'none', cursor: 'pointer' }}
-                        onClick={() => { onToggleTodo(idx) }}>
+                        onClick={(event) => {
+                            event.stopPropagation()
+                            onToggleTodo(idx)
+                        }}>
                         {todo.txt}
                     </li>
                 ))}
