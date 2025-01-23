@@ -1,0 +1,28 @@
+.compose-container {
+    background-color: white;
+    width: 90%;
+}
+
+.form,
+.input {
+    width: 100%;
+}
+
+.title,
+.body-txt {
+    border: thin solid lightgray;
+    padding: 15px;
+}
+
+.title {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.body-txt {
+    height: 35vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}

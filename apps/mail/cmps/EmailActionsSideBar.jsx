@@ -8,7 +8,6 @@ export function EmailActionsSideBar({ categories, setMails }) {
     const [isOpen, setIsOpen] = useState(false)
 
     function onCompose() {
-        console.log('Composing')
         setIsOpen(true)
     }
 

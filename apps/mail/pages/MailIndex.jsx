@@ -57,7 +57,7 @@ export function MailIndex() {
         <MailHeader />
         <div className='list-categories-container'>
             {mails.length > 0 && <MailList mails={mails} setSelectedMailInfo={setSelectedMailInfo} />}
-            <EmailActionsSideBar categories={categories} />
+            <EmailActionsSideBar categories={categories} setMails={setMails}/>
         </div>
     </div>
 }
