@@ -1,0 +1,20 @@
+.note-index .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+}
+
+.note-index .modal-content {
+    position: fixed;
+    font-size: 1.1em;
+    top: 50%;
+    left: 50%;
+    width: 70vw;
+    max-width: 600px;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+}

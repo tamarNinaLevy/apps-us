@@ -35,11 +35,27 @@ function _createNotes() {
     let notes = loadFromStorage(NOTE_KEY)
     if (!notes || !notes.length) {
         const notes = [
-            _createNote({ type: "NoteTxt", isPinned: true }),
+            _createNote({ type: "NoteTxt", isPinned: false }),
+            _createNote({ type: "NoteTxt", isPinned: false }),
+            _createNote({ type: "NoteTodos", isPinned: false }),
+            _createNote({ type: "NoteTxt", isPinned: false }),
+            _createNote({ type: "NoteTxt", isPinned: false }),
+            _createNote({ type: "NoteTodos", isPinned: false }),
             _createNote({ type: "NoteImg", isPinned: false }),
             _createNote({ type: "NoteTodos", isPinned: false }),
             _createNote({ type: "NoteTxt", isPinned: false }),
-            _createNote({ type: "NoteImg", isPinned: true }),
+            _createNote({ type: "NoteTodos", isPinned: false }),
+            _createNote({ type: "NoteTxt", isPinned: false }),
+            _createNote({ type: "NoteImg", isPinned: false }),
+            _createNote({ type: "NoteTodos", isPinned: false }),
+            _createNote({ type: "NoteTxt", isPinned: false }),
+            _createNote({ type: "NoteImg", isPinned: false }),
+            _createNote({ type: "NoteTodos", isPinned: false }),
+            _createNote({ type: "NoteTxt", isPinned: false }),
+            _createNote({ type: "NoteTxt", isPinned: false }),
+            _createNote({ type: "NoteTxt", isPinned: false }),
+            _createNote({ type: "NoteTodos", isPinned: false }),
+            _createNote({ type: "NoteTxt", isPinned: true }),
             _createNote({ type: "NoteTodos", isPinned: true })]
         saveToStorage(NOTE_KEY, notes)
     }

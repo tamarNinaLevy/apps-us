@@ -10,8 +10,19 @@ export function MailIndex() {
 
     const [mails, setMails] = useState([])
     const [selectedMailInfo, setSelectedMailInfo] = useState(null)
+
     const [categories, setCategories] = useState({
-        read: 0,
+        unread: 0,
+        drafts: 0,
+        trash: 0,
+        all: 0
+    })
+
+    const [filterPageBy, setFilterPageBy] = useState({
+        unread: false,
+        drafts: false,
+        trash: false,
+        all: false
     })
 
     useEffect(() => {
@@ -24,14 +35,8 @@ export function MailIndex() {
         }
     }, [selectedMailInfo])
 
-    useEffect(() => {
-        mails.length > 0 && setCategories(prev => {
-            return { ...prev, read: mailService.countUnraed(mails) }
-        })
-    }, [mails])
-
     function loadMails() {
-        mailService.query()
+        mailService.query(filterPageBy)
             .then((res) => {
                 setMails(res)
             })
@@ -46,6 +51,7 @@ export function MailIndex() {
                 alert('Success')
                 setSelectedMailInfo(null)
                 loadMails()
+                //setMails
             })
             .catch(err => {
                 console.log('ERR: ', err)
@@ -53,11 +59,36 @@ export function MailIndex() {
             })
     }
 
+    function deleteMail(mailId) {
+        console.log("mailId: ", mailId)
+        mailService.removeToTrash(mailId)
+            .then((res) => {
+                alert('Removed to trash succesfully!')
+                setMails((prevMails) => prevMails.filter((mail) => mail.id !== mailId))
+            })
+            .catch(err => {
+                console.log('ERR: ', err)
+            })
+    }
+
+    // const unread = get...
+
     return <div className='mail-index-container'>
         <MailHeader />
         <div className='list-categories-container'>
-            {mails.length > 0 && <MailList mails={mails} setSelectedMailInfo={setSelectedMailInfo} />}
-            <EmailActionsSideBar categories={categories} setMails={setMails}/>
+            {
+                mails.length > 0 &&
+                <MailList
+                    mails={mails}
+                    setSelectedMailInfo={setSelectedMailInfo}
+                    deleteMail={deleteMail}
+                />
+            }
+            <EmailActionsSideBar
+                categories={categories}
+                setMails={setMails}
+                setFilterPageBy={setFilterPageBy}
+            />
         </div>
     </div>
 }
