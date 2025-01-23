@@ -4,7 +4,7 @@ import { ComposeMail } from "./ComposeMail.jsx"
 
 export function EmailActionsSideBar({ setMails, setFilterPageBy, unread }) {
 
-    const names = ['all', 'unread', 'drafts', 'trash']
+    const names = ['all', 'unread', 'drafts', 'trash', 'favorites']
     const [isOpen, setIsOpen] = useState(false)
 
     function onCompose() {

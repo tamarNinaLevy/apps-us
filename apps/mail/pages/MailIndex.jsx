@@ -10,16 +10,19 @@ export function MailIndex() {
 
     const [mails, setMails] = useState([])
     const [selectedMailInfo, setSelectedMailInfo] = useState(null)
+    const [unread, setUnread] = useState(0)
 
     const [filterPageBy, setFilterPageBy] = useState({
         unread: false,
         drafts: false,
         trash: false,
-        all: true
+        all: true,
+        favorites: true
     })
 
     useEffect(() => {
         loadMails()
+        countUnread()
     }, [filterPageBy])
 
     useEffect(() => {
@@ -32,6 +35,7 @@ export function MailIndex() {
         mailService.query(filterPageBy)
             .then((res) => {
                 setMails(res)
+                countUnread()
             })
             .catch(err => {
                 console.log('ERR: ', err)
@@ -52,7 +56,13 @@ export function MailIndex() {
     }
 
     function countUnread() {
-        return mailService.countUnraed(mails)
+        return mailService.countUnread()
+            .then((res) => {
+                setUnread(res)
+            })
+            .catch((err) => {
+                console.log('ERR: ', err)
+            })
     }
 
     function deleteMail(mailId) {
@@ -65,8 +75,6 @@ export function MailIndex() {
                 console.log('ERR: ', err)
             })
     }
-
-    const unread = countUnread()
 
     return <div className='mail-index-container'>
         <MailHeader />

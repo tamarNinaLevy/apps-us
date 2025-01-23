@@ -23,12 +23,21 @@
 
 }
 
+.star:hover {
+    background-color: rgb(101, 101, 105);
+    border-radius: 50%;
+    opacity: 0.4;
+    transition: background-color 1s;
+}
+
+.star img {
+    width: 5vh;
+}
+
 .email-detail {
     width: 45%;
-    /* background-color: lightblue; */
 }
 
 .small-detail {
     width: 10%;
-    /* background-color: lightblue; */
 }

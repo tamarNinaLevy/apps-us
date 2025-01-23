@@ -1,6 +1,7 @@
 const { useState, useEffect } = React
 
 import { Modal } from '../../../cmps/Modal.jsx'
+
 import { mailService } from '../services/mail.service.js'
 
 // {
@@ -25,7 +26,7 @@ export function ComposeMail({ isOpen, setIsOpen, setMails, mail }) {
         }
     }, [mail])
 
-    function onClose() {
+    function closeModal() {
         setIsOpen(!setIsOpen)
         setComposedMail({ to: '', subject: '', body: '', })
     }
@@ -82,7 +83,7 @@ export function ComposeMail({ isOpen, setIsOpen, setMails, mail }) {
                             return [...prev, { ...newMail, id: mail.id }]
                         })
                     }
-                    onClose()
+                    closeModal()
                     alert('Added mail successfully')
                 })
                 .catch(err => {
@@ -92,6 +93,11 @@ export function ComposeMail({ isOpen, setIsOpen, setMails, mail }) {
     }
 
     function saveDraft() {
+        const emptyInputs = validateMail()
+        if (emptyInputs.length === 3) {
+            closeModal()
+            return
+        }
         const newDraft = {
             ...composedMail,
             createdAt: new Date(),
@@ -113,7 +119,7 @@ export function ComposeMail({ isOpen, setIsOpen, setMails, mail }) {
                         return copy
                     })
                 }
-                onClose()
+                closeModal()
                 alert('Saved draft successfully!')
             })
             .catch(err => {
@@ -121,7 +127,7 @@ export function ComposeMail({ isOpen, setIsOpen, setMails, mail }) {
             })
     }
 
-    return <Modal isOpen={isOpen} onClose={onClose}>
+    return <Modal isOpen={isOpen} onClose={saveDraft}>
         <div className="compose-container">
             <span>New message</span>
             <form onSubmit={(event) => submitMail(event)} className='form flex column align-center justify-center'>
@@ -130,7 +136,6 @@ export function ComposeMail({ isOpen, setIsOpen, setMails, mail }) {
                 <input className="input body-txt" type="text" name="body" id="body" onInput={onInput} placeholder="Body" defaultValue={composedMail.body || ''} />
                 <div className="flex row align-center justify-center">
                     <input className="span-margin" type="submit" value="submit" />
-                    <input className="span-margin" type="button" name="draft" value="save draft" onClick={saveDraft} />
                 </div>
             </form>
         </div>
