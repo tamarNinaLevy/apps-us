@@ -10,13 +10,24 @@ export const mailService = {
     remove,
     save,
     countUnraed,
-    updatePropInMail
+    updatePropInMail,
+    removeToTrash
 }
 
 function query(filterBy = {}) {
+    console.log('inside service');
     return storageService.query(MAIL_KEY)
-        .then(cars => {
-            return cars
+        .then(mails => {
+            if (filterBy.trash) {
+                return mails.filter((mail) => mail.removedAt !== null)
+            }
+            if (filterBy.drafts) {
+                return mails.filter((mail) => mail.sentAt !== null)
+            }
+            if (filterBy.unread) {
+                return mails.filter((mail) => !mail.isRead)
+            }
+            return mails.filter((mail) => mail.removedAt === null || mail.sentAt === null)
         })
 }
 
@@ -42,7 +53,7 @@ function save(mail) {
 function updatePropInMail(mailId, propName, newVal) {
     return storageService.get(MAIL_KEY, mailId)
         .then(mail => {
-            const copy = {...mail}
+            const copy = { ...mail }
             copy[propName] = newVal
             return save(copy)
         })
@@ -56,11 +67,22 @@ function countUnraed(mails) {
     return unread.length
 }
 
+function removeToTrash(mailId) {
+    return storageService.get(MAIL_KEY, mailId)
+        .then((mail) => {
+            mail.removedAt = new Date()
+            return save(mail)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
+
 function _createMails() {
     let mails = loadFromStorage(MAIL_KEY)
     if (!mails || !mails.length) {
         mails = []
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 3; i++) {
             mails.push(_createMail())
         }
         saveToStorage(MAIL_KEY, mails)
@@ -77,6 +99,6 @@ function _createMail() {
         sentAt: new Date(),
         removedAt: null,
         from: 'momo@momo.com',
-        to: 'user@appsus.com'
+        to: 'user@appsus.com',
     }
 }

@@ -2,7 +2,7 @@ const { useNavigate } = ReactRouterDOM
 
 import { MailPreview } from "./MailPreview.jsx"
 
-export function MailList({ mails, setSelectedMailInfo }) {
+export function MailList({ mails, setSelectedMailInfo, deleteMail }) {
 
     const navigate = useNavigate()
 
@@ -15,14 +15,14 @@ export function MailList({ mails, setSelectedMailInfo }) {
     }
 
     function onDelete(id) {
-        console.log("deleting id: ", id);
+        console.log("deleting id: ", id)
+        deleteMail(id)
     }
 
     return <div className="mail-list">
-        {mails.map((mail) => {
-            return <div className="mail-preview-container flex row align-center" key={mail.id}>
+        {mails.map((mail, index) => {
+            return <div className="mail-preview-container flex row align-center" key={mail.id || index}>
                 <MailPreview
-                    key={mail.id}
                     mail={mail}
                 />
                 <input type="button" value={'view'} onClick={() => viewMail(mail.id)} />
