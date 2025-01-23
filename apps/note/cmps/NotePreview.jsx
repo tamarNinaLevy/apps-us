@@ -10,17 +10,17 @@ const dynamicComponents = {
     NoteTodos,
 }
 
-export function NotePreview({ note, handleOnRemoveNote, handleOnTogglePin, handleOnToggleTodo }) {
+export function NotePreview({ note, handleOnRemoveNote, handleOnTogglePin, handleOnToggleTodo, handleOnClickNote }) {
     const NoteComponent = dynamicComponents[note.type]
 
     if (!NoteComponent) return <div>Unknown Note Type: {note.type}</div>;
 
     return (
-        <div className="note-preview" style={note.style}>
+        <div onClick={handleOnClickNote} className="note-preview" style={note.style}>
             <NoteComponent info={note.info} handleOnToggleTodo={handleOnToggleTodo} />
             <button className="remove-btn" onClick={handleOnRemoveNote}>x</button>
             <button className="pin-btn" onClick={handleOnTogglePin}>
-                <span class="material-symbols-outlined">
+                <span className="material-symbols-outlined">
                     keep
                 </span>
             </button>
