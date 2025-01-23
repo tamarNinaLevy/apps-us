@@ -11,13 +11,6 @@ export function MailIndex() {
     const [mails, setMails] = useState([])
     const [selectedMailInfo, setSelectedMailInfo] = useState(null)
 
-    const [categories, setCategories] = useState({
-        unread: 0,
-        drafts: 0,
-        trash: 0,
-        all: 0
-    })
-
     const [filterPageBy, setFilterPageBy] = useState({
         unread: false,
         drafts: false,
@@ -51,7 +44,6 @@ export function MailIndex() {
                 alert('Success')
                 setSelectedMailInfo(null)
                 loadMails()
-                //setMails
             })
             .catch(err => {
                 console.log('ERR: ', err)
@@ -59,8 +51,11 @@ export function MailIndex() {
             })
     }
 
+    function countUnread() {
+        return mailService.countUnraed(mails)
+    }
+
     function deleteMail(mailId) {
-        console.log("mailId: ", mailId)
         mailService.removeToTrash(mailId)
             .then((res) => {
                 alert('Removed to trash succesfully!')
@@ -71,7 +66,7 @@ export function MailIndex() {
             })
     }
 
-    // const unread = get...
+    const unread = countUnread()
 
     return <div className='mail-index-container'>
         <MailHeader />
@@ -86,9 +81,10 @@ export function MailIndex() {
                 />
             }
             <EmailActionsSideBar
-                categories={categories}
                 setMails={setMails}
+                filterPageBy={filterPageBy}
                 setFilterPageBy={setFilterPageBy}
+                unread={unread}
             />
         </div>
     </div>
