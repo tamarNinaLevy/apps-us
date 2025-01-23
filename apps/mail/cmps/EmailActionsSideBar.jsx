@@ -4,7 +4,7 @@ import { ComposeMail } from "./ComposeMail.jsx"
 
 export function EmailActionsSideBar({ categories, setMails, setCategories, setFilterPageBy }) {
 
-    const names = ['unread', 'drafts', 'trash']
+    const names = ['all', 'unread', 'drafts', 'trash']
     const [isOpen, setIsOpen] = useState(false)
 
     function onCompose() {
@@ -13,9 +13,9 @@ export function EmailActionsSideBar({ categories, setMails, setCategories, setFi
 
     function getFilteredEmails(category) {
         setFilterPageBy(prev => {
-            const copy = [...prev]
-            for(let key in copy){
-                if(key === category)
+            const copy = { ...prev }
+            for (let key in copy) {
+                if (key === category)
                     copy[key] = true
                 else
                     copy[key] = false

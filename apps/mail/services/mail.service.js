@@ -15,6 +15,7 @@ export const mailService = {
 }
 
 function query(filterBy = {}) {
+    console.log('inside service');
     return storageService.query(MAIL_KEY)
         .then(mails => {
             if (filterBy.trash) {
@@ -22,6 +23,9 @@ function query(filterBy = {}) {
             }
             if (filterBy.drafts) {
                 return mails.filter((mail) => mail.sentAt !== null)
+            }
+            if (filterBy.unread) {
+                return mails.filter((mail) => !mail.isRead)
             }
             return mails.filter((mail) => mail.removedAt === null || mail.sentAt === null)
         })
@@ -78,7 +82,7 @@ function _createMails() {
     let mails = loadFromStorage(MAIL_KEY)
     if (!mails || !mails.length) {
         mails = []
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 3; i++) {
             mails.push(_createMail())
         }
         saveToStorage(MAIL_KEY, mails)

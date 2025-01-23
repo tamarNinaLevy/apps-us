@@ -14,33 +14,26 @@ export function MailIndex() {
     const [categories, setCategories] = useState({
         unread: 0,
         drafts: 0,
-        trash: 0
+        trash: 0,
+        all: 0
     })
 
     const [filterPageBy, setFilterPageBy] = useState({
         unread: false,
         drafts: false,
-        trash: false
+        trash: false,
+        all: false
     })
 
     useEffect(() => {
         loadMails()
-    }, [filterPageBy])
+    }, [])
 
     useEffect(() => {
         if (selectedMailInfo) {
             onClickMark()
         }
     }, [selectedMailInfo])
-
-    useEffect(() => {
-        mails.length > 0 && setCategories(prev => {
-            return { ...prev, read: mailService.countUnraed(mails) }
-        })
-        // if (mails.length > 0 && !mails[mails.length - 1].id) {
-        loadMails()
-        // }
-    }, [mails])
 
     function loadMails() {
         mailService.query(filterPageBy)
@@ -58,6 +51,7 @@ export function MailIndex() {
                 alert('Success')
                 setSelectedMailInfo(null)
                 loadMails()
+                //setMails
             })
             .catch(err => {
                 console.log('ERR: ', err)
@@ -70,16 +64,14 @@ export function MailIndex() {
         mailService.removeToTrash(mailId)
             .then((res) => {
                 alert('Removed to trash succesfully!')
-                setMails((prev) => {
-                    const idx = prev.findIndex((mail) => mail.id === mailId)
-                    prev.splice(idx, 1)
-                    return prev
-                })
+                setMails((prevMails) => prevMails.filter((mail) => mail.id !== mailId))
             })
             .catch(err => {
                 console.log('ERR: ', err)
             })
     }
+
+    // const unread = get...
 
     return <div className='mail-index-container'>
         <MailHeader />

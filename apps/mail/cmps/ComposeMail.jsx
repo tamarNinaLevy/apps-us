@@ -59,8 +59,10 @@ export function ComposeMail({ isOpen, setIsOpen, setMails }) {
                 from: 'momo@momo.com',
             }
             mailService.save(newMail)
-                .then((res) => {
-                    setMails(prev => [...prev, newMail])
+                .then((mail) => {
+                    setMails(prev => {
+                        return [...prev, { ...newMail, id: mail.id }]
+                    })
                     onClose()
                     alert('Added mail successfully')
                 })

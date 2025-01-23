@@ -20,7 +20,7 @@ export function NotePreview({ note, handleOnRemoveNote, handleOnTogglePin }) {
             <NoteComponent info={note.info} />
             <button className="remove-btn" onClick={handleOnRemoveNote}>x</button>
             <button className="pin-btn" onClick={handleOnTogglePin}>
-                <span class="material-symbols-outlined">
+                <span className="material-symbols-outlined">
                     keep
                 </span>
             </button>
