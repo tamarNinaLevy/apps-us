@@ -42,9 +42,28 @@ export function MailList({ mails, setSelectedMailInfo, deleteMail, setMails }) {
         setDraft(mail)
     }
 
+    function favorite(mail) {
+        mailService.updatePropInMail(mail.id, 'isFavorite', !mail.isFavorite)
+            .then((updatedMail) => {
+                alert('Success')
+                setMails(prev => {
+                    const copy = [...prev]
+                    const idx = copy.findIndex(({ id }) => id === mail.id)
+                    copy.splice(idx, 1, updatedMail)
+                    return copy
+                })
+            })
+            .catch(err => {
+                console.log('ERR: ', err)
+            })
+    }
+
     return <div className="mail-list">
         {mails.map((mail, index) => {
             return <div className="mail-preview-container flex row align-center" key={mail.id || index}>
+                <div className="star span-margin" onClick={() => favorite(mail)}>
+                    <img src={`assets/img/${mail.isFavorite ? 'star-yellow.svg' : 'start-2-icon.svg'}`} />
+                </div>
                 <MailPreview
                     mail={mail}
                 />

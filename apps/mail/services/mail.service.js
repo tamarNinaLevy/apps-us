@@ -9,7 +9,7 @@ export const mailService = {
     get,
     remove,
     save,
-    countUnraed,
+    countUnread,
     updatePropInMail,
     removeToTrash
 }
@@ -28,6 +28,9 @@ function query(filterBy = {}) {
             }
             if (filterBy.all) {
                 return mails.filter((mail) => mail.removedAt === null && mail.sentAt !== null)
+            }
+            if (filterBy.favorites) {
+                return mails.filter((mail) => mail.isFavorite)
             }
             return mails;
         })
@@ -64,9 +67,15 @@ function updatePropInMail(mailId, propName, newVal) {
         })
 }
 
-function countUnraed(mails) {
-    const unread = mails.filter((mail) => !mail.isRead)
-    return unread.length
+function countUnread() {
+    return query({ unread: true })
+        .then((res) => {
+            const mails = res
+            return mails.length
+        })
+        .catch((err) => {
+            console.log('ERR: ', err);
+        })
 }
 
 function removeToTrash(mailId) {
