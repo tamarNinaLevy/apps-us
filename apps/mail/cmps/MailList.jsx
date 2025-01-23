@@ -19,10 +19,9 @@ export function MailList({ mails, setSelectedMailInfo }) {
     }
 
     return <div className="mail-list">
-        {mails.map((mail) => {
-            return <div className="mail-preview-container flex row align-center" key={mail.id}>
+        {mails.map((mail, index) => {
+            return <div className="mail-preview-container flex row align-center" key={mail.id || index}>
                 <MailPreview
-                    key={mail.id}
                     mail={mail}
                 />
                 <input type="button" value={'view'} onClick={() => viewMail(mail.id)} />

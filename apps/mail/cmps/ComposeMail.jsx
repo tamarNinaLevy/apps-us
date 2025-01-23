@@ -14,9 +14,10 @@ import { mailService } from '../services/mail.service.js'
 //      from: 'momo@momo.com',
 //      to: 'user@appsus.com'
 // }
+
 export function ComposeMail({ isOpen, setIsOpen, setMails }) {
 
-    const [composedMail, setComposedMail] = useState({ subject: '', body: '' })
+    const [composedMail, setComposedMail] = useState({ to: '', subject: '', body: '', })
 
     function onClose() {
         setIsOpen(!setIsOpen)
@@ -49,9 +50,18 @@ export function ComposeMail({ isOpen, setIsOpen, setMails }) {
             alert('Empty input')
             return
         } else {
-            mailService.save(composedMail)
+            const newMail = {
+                ...composedMail,
+                createdAt: new Date(),
+                isRead: false,
+                sentAt: new Date(),
+                removedAt: null,
+                from: 'momo@momo.com',
+            }
+            mailService.save(newMail)
                 .then((res) => {
-                    setMails(prev => [...prev, composedMail])
+                    setMails(prev => [...prev, newMail])
+                    onClose()
                     alert('Added mail successfully')
                 })
                 .catch(err => {
@@ -66,10 +76,11 @@ export function ComposeMail({ isOpen, setIsOpen, setMails }) {
 
     return <Modal isOpen={isOpen} onClose={onClose}>
         <div className="compose-container">
-            <h1>Add mail</h1>
+            <span>New message</span>
             <form onSubmit={(event) => submitMail(event)} className='form flex column align-center justify-center'>
-                <input className="input title" type="text" name="subject" id="subject" onInput={onInput} placeholder="subject" />
-                <input className="input body-txt" type="text" name="body" id="body" onInput={onInput} placeholder="body" />
+                <input className="input title" type="text" name="to" id="to" onInput={onInput} placeholder="To" />
+                <input className="input" type="text" name="subject" id="subject" onInput={onInput} placeholder="Subject" />
+                <input className="input body-txt" type="text" name="body" id="body" onInput={onInput} placeholder="Body" />
                 <div className="flex row align-center justify-center">
                     <input className="span-margin" type="submit" value="submit" />
                     <input className="span-margin" type="button" name="draft" value="save draft" onClick={saveDraft} />

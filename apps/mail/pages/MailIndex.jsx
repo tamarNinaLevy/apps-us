@@ -28,6 +28,9 @@ export function MailIndex() {
         mails.length > 0 && setCategories(prev => {
             return { ...prev, read: mailService.countUnraed(mails) }
         })
+        if (mails.length > 0 && !mails[mails.length - 1].id) {
+            loadMails()
+        }
     }, [mails])
 
     function loadMails() {
@@ -57,7 +60,7 @@ export function MailIndex() {
         <MailHeader />
         <div className='list-categories-container'>
             {mails.length > 0 && <MailList mails={mails} setSelectedMailInfo={setSelectedMailInfo} />}
-            <EmailActionsSideBar categories={categories} setMails={setMails}/>
+            <EmailActionsSideBar categories={categories} setMails={setMails} />
         </div>
     </div>
 }

@@ -8,8 +8,7 @@
     width: 100%;
 }
 
-.title,
-.body-txt {
+.input {
     border: thin solid lightgray;
     padding: 15px;
 }
