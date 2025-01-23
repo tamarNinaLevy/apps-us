@@ -77,7 +77,7 @@ function _createNote({ type, isPinned = false }) {
             return {
                 ...baseNote,
                 info: {
-                    txt: makeLorem(20),
+                    txt: makeLorem(10) + '\n' + makeLorem(10) + '\n' + makeLorem(5),
                 },
             };
         case "NoteImg":
