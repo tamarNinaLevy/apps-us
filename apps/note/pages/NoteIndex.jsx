@@ -27,13 +27,24 @@ export function NoteIndex() {
             })
     }
 
+    function onTogglePin(noteId) {
+        let note = notes.find(note => note.id === noteId)
+        note.isPinned = !note.isPinned
+        note = { ...note }
+        noteService.save(note)
+            .then(() => {
+                loadNotes()
+            })
+    }
+
     if (!notes) return <div>Loading...</div>
     return (<div>
-        <NoteAdd handleOnAddNote={onAddNote} />
         <section className="note-index">
+            <NoteAdd handleOnAddNote={onAddNote} />
             <NoteList
                 notes={notes}
-                handleOnRemoveNote={onRemoveNote} />
+                handleOnRemoveNote={onRemoveNote}
+                handleOnTogglePin={onTogglePin} />
         </section>
     </div>
     )

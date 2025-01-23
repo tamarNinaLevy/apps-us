@@ -30,7 +30,7 @@
 
 .note-list>li {}
 
-.note-preview button {
+.note-preview .pin-btn {
     border: 0;
     background: transparent;
     border-radius: 50rem;
@@ -40,6 +40,21 @@
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
+    opacity: 0;
+    z-index: 1;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.note-preview .remove-btn {
+    border: 0;
+    background: transparent;
+    border-radius: 50rem;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
     opacity: 0;
     z-index: 1;
     transition: 0.2s;
