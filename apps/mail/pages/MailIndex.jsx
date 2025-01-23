@@ -22,7 +22,7 @@ export function MailIndex() {
         unread: false,
         drafts: false,
         trash: false,
-        all: false
+        all: true
     })
 
     useEffect(() => {
