@@ -1,5 +1,5 @@
 export function Logo() {
     return <div className="logo">
-        <h1>Logo</h1>
+        <img src="assets/img/newgmaillogo.jpg" />
     </div>
 }

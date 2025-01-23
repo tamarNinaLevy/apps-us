@@ -16,6 +16,10 @@
     padding-left: 25px;
 }
 
+.logo img {
+    width: 7vw;
+}
+
 .search-container {
     width: 78%;
     display: flex;

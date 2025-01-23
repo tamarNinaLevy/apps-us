@@ -15,19 +15,21 @@ export const mailService = {
 }
 
 function query(filterBy = {}) {
-    console.log('inside service');
     return storageService.query(MAIL_KEY)
         .then(mails => {
             if (filterBy.trash) {
                 return mails.filter((mail) => mail.removedAt !== null)
             }
             if (filterBy.drafts) {
-                return mails.filter((mail) => mail.sentAt !== null)
+                return mails.filter((mail) => mail.sentAt === null && mail.removedAt === null)
             }
             if (filterBy.unread) {
-                return mails.filter((mail) => !mail.isRead)
+                return mails.filter((mail) => !mail.isRead && mail.removedAt === null && mail.sentAt !== null)
             }
-            return mails.filter((mail) => mail.removedAt === null || mail.sentAt === null)
+            if (filterBy.all) {
+                return mails.filter((mail) => mail.removedAt === null && mail.sentAt !== null)
+            }
+            return mails;
         })
 }
 
