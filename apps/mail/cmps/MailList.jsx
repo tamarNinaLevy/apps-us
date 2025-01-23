@@ -33,7 +33,7 @@ export function MailList({ mails, setSelectedMailInfo, deleteMail, setMails }) {
                     console.log('ERR: ', err);
                 })
         } else {
-            deleteMail(id)
+            deleteMail(mailId)
         }
     }
 
