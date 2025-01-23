@@ -20,7 +20,8 @@
 @import './apps/mail/cmps/MailPreview.css';
 @import './apps/mail/cmps/MailHeader.css';
 @import './apps/mail/cmps/EmailCategories.css';
-
+@import './apps/mail/cmps/modal.css';
+@import './apps/mail/cmps/ComposeMail.css';
 
 /* Cmps */
 @import './cmps/UserMsg.css';

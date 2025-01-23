@@ -1,4 +1,4 @@
-const { useState, useEffect } = React
+const { useState } = React
 
 import { Modal } from '../../../cmps/Modal.jsx'
 import { mailService } from '../services/mail.service.js'
@@ -14,8 +14,6 @@ import { mailService } from '../services/mail.service.js'
 //      from: 'momo@momo.com',
 //      to: 'user@appsus.com'
 // }
-
-
 export function ComposeMail({ isOpen, setIsOpen, setMails }) {
 
     const [composedMail, setComposedMail] = useState({ subject: '', body: '' })
@@ -69,11 +67,13 @@ export function ComposeMail({ isOpen, setIsOpen, setMails }) {
     return <Modal isOpen={isOpen} onClose={onClose}>
         <div className="compose-container">
             <h1>Add mail</h1>
-            <form onSubmit={(event) => submitMail(event)}>
-                <input type="text" name="subject" id="subject" onInput={onInput} placeholder="subject" />
-                <input type="text" name="body" id="body" onInput={onInput} placeholder="body" />
-                <input type="submit" value="submit" />
-                <input type="button" name="draft" value="save draft" onClick={saveDraft} />
+            <form onSubmit={(event) => submitMail(event)} className='form flex column align-center justify-center'>
+                <input className="input title" type="text" name="subject" id="subject" onInput={onInput} placeholder="subject" />
+                <input className="input body-txt" type="text" name="body" id="body" onInput={onInput} placeholder="body" />
+                <div className="flex row align-center justify-center">
+                    <input className="span-margin" type="submit" value="submit" />
+                    <input className="span-margin" type="button" name="draft" value="save draft" onClick={saveDraft} />
+                </div>
             </form>
         </div>
     </Modal>
