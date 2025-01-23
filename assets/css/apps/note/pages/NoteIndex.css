@@ -1,1 +1,9 @@
  /* note index */
+
+ .note-index {
+     padding: 2rem;
+ }
+
+ .note-index h3 {
+     font-size: 1rem;
+ }
