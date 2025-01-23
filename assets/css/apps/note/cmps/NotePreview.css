@@ -54,3 +54,7 @@
 .note-preview button:hover {
     background: rgba(255, 255, 255, 0.25);
 }
+
+.note-preview .note-txt {
+    white-space: pre-wrap;
+}

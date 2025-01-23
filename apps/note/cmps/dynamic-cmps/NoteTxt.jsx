@@ -1,8 +1,8 @@
 export function NoteTxt({ info }) {
     return (
-        <div className="note-txt">
+        <div className="note-txt-wrapper">
             <h3>{info.title || ''}</h3>
-            <div className="note-txt">{info.txt}</div>
+            <p className="note-txt">{info.txt}</p>
         </div>
     )
 }

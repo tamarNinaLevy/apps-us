@@ -6,6 +6,7 @@ const { useState, useRef, useEffect } = React
 export function NoteEdit({ note = noteService.getEmptyNote(), handleSaveNote }) {
     const [noteToEdit, setNoteToEdit] = useState(note)
     const [isOpen, setIsOpen] = useState(false)
+    const [textareaRows, setTextareaRows] = useState(noteToEdit.info.txt ? noteToEdit.info.txt.split("\n").length : 1)
     const cmpRef = useRef(null)
 
 
@@ -15,6 +16,11 @@ export function NoteEdit({ note = noteService.getEmptyNote(), handleSaveNote }) 
 
         setNoteToEdit((prevNote) => {
             const updatedNote = { ...prevNote };
+
+            if (field === 'txt') {
+                const newLineCount = value.split("\n").length;
+                setTextareaRows(newLineCount);
+            }
 
             if (field === "todos") {
                 // Update todos as a single text string to allow backspace and space
@@ -45,8 +51,8 @@ export function NoteEdit({ note = noteService.getEmptyNote(), handleSaveNote }) 
         event.preventDefault()
 
         if (noteToEdit.type === 'NoteTxt' && !noteToEdit.info.txt || noteToEdit.type === 'NoteTodos' && noteToEdit.info.todos.length === 0) {
+            setEmptyNote()
             setIsOpen(false)
-            setNoteToEdit(noteService.getEmptyNote())
             return
         }
         noteService.save(noteToEdit).then(() => {
@@ -55,6 +61,7 @@ export function NoteEdit({ note = noteService.getEmptyNote(), handleSaveNote }) 
             }
             handleSaveNote(noteToEdit)
             setIsOpen(false)
+            setTextareaRows(1)
         })
 
 
@@ -62,17 +69,25 @@ export function NoteEdit({ note = noteService.getEmptyNote(), handleSaveNote }) 
 
     const handleKeyDown = (event) => {
         const { key, metaKey, ctrlKey } = event
-        if (key === 'Enter' && (ctrlKey || metaKey)) {
-            onSaveNote(event)
-            return
+        if (key === 'Enter') {
+            if ((ctrlKey || metaKey)) {
+                onSaveNote(event)
+                return
+            }
+            // setTextareaRows(prevRows => ++prevRows)
         }
     }
 
     const handleTypeChange = (type) => {
+        setEmptyNote(type)
+        setIsOpen(true)
+    }
+
+
+    const setEmptyNote = (type = "NoteTxt") => {
         const emptyNote = noteService.getEmptyNote(type)
         setNoteToEdit(emptyNote)
-        setIsOpen(true)
-
+        setTextareaRows(1)
     }
 
     const handleClickOutside = (event) => {
@@ -122,7 +137,7 @@ export function NoteEdit({ note = noteService.getEmptyNote(), handleSaveNote }) 
             </div>
             <textarea
                 onKeyDown={handleKeyDown}
-                rows="1"
+                rows={textareaRows}
                 onClick={() => setIsOpen(true)}
                 name={noteToEdit.type === "NoteTxt" ? "txt" : "todos"}
                 placeholder={
