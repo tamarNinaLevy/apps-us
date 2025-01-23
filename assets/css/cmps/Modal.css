@@ -1,4 +1,4 @@
-.modal-backdrop {
+.note-index .modal-backdrop {
     position: fixed;
     top: 0;
     left: 0;
@@ -8,7 +8,7 @@
     z-index: 0;
 }
 
-.modal-content {
+.note-index .modal-content {
     position: fixed;
     font-size: 1.1em;
     top: 50%;

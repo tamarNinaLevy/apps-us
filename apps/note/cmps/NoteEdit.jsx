@@ -44,7 +44,8 @@ export function NoteEdit({ note = noteService.getEmptyNote(), handleSaveNote }) 
 
     const onSaveNote = (event) => {
         event.preventDefault()
-        if (!noteToEdit.info.txt && (Array.isArray(noteToEdit.info.todos) && noteToEdit.info.todos.length === 0)) {
+
+        if (noteToEdit.type === 'NoteTxt' && !noteToEdit.info.txt || noteToEdit.type === 'NoteTodos' && noteToEdit.info.todos.length === 0) {
             setIsOpen(false)
             return
         }
@@ -53,6 +54,7 @@ export function NoteEdit({ note = noteService.getEmptyNote(), handleSaveNote }) 
                 setNoteToEdit(noteService.getEmptyNote())
             }
             handleSaveNote(noteToEdit)
+            setSelectedType('NoteTxt')
             setIsOpen(false)
         })
 

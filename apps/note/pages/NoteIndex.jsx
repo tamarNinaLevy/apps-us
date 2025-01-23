@@ -56,8 +56,8 @@ export function NoteIndex() {
     }
 
     if (!notes) return <div>Loading...</div>
-    return (<div>
-        <section className="note-index">
+    return (<div className="note-index">
+        <section>
             <div className="note-add">
                 <NoteEdit handleSaveNote={onAddNote} />
             </div>
