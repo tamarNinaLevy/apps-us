@@ -1,8 +1,9 @@
 const { useNavigate } = ReactRouterDOM
 
+import { mailService } from "../services/mail.service.js"
 import { MailPreview } from "./MailPreview.jsx"
 
-export function MailList({ mails, setSelectedMailInfo }) {
+export function MailList({ mails, setSelectedMailInfo, deleteMail }) {
 
     const navigate = useNavigate()
 
@@ -16,6 +17,7 @@ export function MailList({ mails, setSelectedMailInfo }) {
 
     function onDelete(id) {
         console.log("deleting id: ", id);
+        deleteMail(id)
     }
 
     return <div className="mail-list">

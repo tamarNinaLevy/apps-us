@@ -72,6 +72,23 @@ export function ComposeMail({ isOpen, setIsOpen, setMails }) {
 
     function saveDraft() {
         console.log('Saving draft...')
+        const newDraft = {
+            ...composedMail,
+            createdAt: new Date(),
+            isRead: false,
+            sentAt: null,
+            removedAt: null,
+            from: 'momo@momo.com',
+        }
+        mailService.save(newDraft)
+            .then((res) => {
+                // setMails(prev => [...prev])
+                onClose()
+                alert('Saved draft successfully!')
+            })
+            .catch(err => {
+                console.log('ERR: ', err)
+            })
     }
 
     return <Modal isOpen={isOpen} onClose={onClose}>
