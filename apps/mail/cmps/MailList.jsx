@@ -15,7 +15,7 @@ export function MailList({ mails, setSelectedMailInfo }) {
     }
 
     function onDelete(id) {
-        console.log("id: ", id);
+        console.log("deleting id: ", id);
     }
 
     return <div className="mail-list">
