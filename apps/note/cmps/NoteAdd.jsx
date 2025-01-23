@@ -89,6 +89,7 @@ export function NoteAdd({ handleOnAddNote }) {
             <form onSubmit={handleAddNote}  >
                 {isOpen && (
                     <input
+                        onKeyDown={handleKeyDown}
                         type="text"
                         name="title"
                         placeholder="Title"

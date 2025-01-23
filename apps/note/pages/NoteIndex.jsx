@@ -41,10 +41,12 @@ export function NoteIndex() {
     return (<div>
         <section className="note-index">
             <NoteAdd handleOnAddNote={onAddNote} />
+            <h3>PINNED</h3>
             <NoteList
                 notes={notes.filter(note => note.isPinned)}
                 handleOnRemoveNote={onRemoveNote}
                 handleOnTogglePin={onTogglePin} />
+            <h3>OTHERS</h3>
             <NoteList
                 notes={notes.filter(note => !note.isPinned)
                 }
