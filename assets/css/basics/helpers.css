@@ -6,12 +6,20 @@
     flex-direction: column;
 }
 
+.row {
+    flex-direction: row;
+}
+
 .justify-center {
     justify-content: center;
 }
 
 .align-center {
     align-items: center;
+}
+
+.justify-start {
+    justify-content: flex-start;
 }
 
 .space-between {

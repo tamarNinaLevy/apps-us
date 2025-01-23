@@ -16,8 +16,7 @@ import { MailPreview } from "./MailPreview.jsx"
 export function MailList({ mails }) {
 
     function onClickMark(event, mail) {
-        console.log("event: ", event);
-        const key = event.target.name;
+        const key = event.target.name
         mail[key] = !mail.isRead
         mailService.save(mail)
             .then((res) => {
@@ -31,7 +30,7 @@ export function MailList({ mails }) {
 
     return <div className="mail-list">
         {mails.map((mail) => {
-            return <div className="mail-preview-container" key={mail.id}>
+            return <div className="mail-preview-container flex row align-center" key={mail.id}>
                 <MailPreview
                     key={mail.id}
                     mail={mail}
