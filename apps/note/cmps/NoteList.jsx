@@ -1,6 +1,6 @@
 import { NotePreview } from "../cmps/NotePreview.jsx"
 
-export function NoteList({ notes, handleOnRemoveNote, handleOnTogglePin }) {
+export function NoteList({ notes, handleOnRemoveNote, handleOnTogglePin, handleOnToggleTodo }) {
 
 
     if (!notes) return <div>No Notes to show</div>
@@ -12,7 +12,8 @@ export function NoteList({ notes, handleOnRemoveNote, handleOnTogglePin }) {
                     <NotePreview
                         note={note}
                         handleOnRemoveNote={() => { handleOnRemoveNote(note.id) }}
-                        handleOnTogglePin={() => { handleOnTogglePin(note.id) }} />
+                        handleOnTogglePin={() => { handleOnTogglePin(note.id) }}
+                        handleOnToggleTodo={() => { handleOnToggleTodo(note.id) }} />
                 </li>
             ))}
         </ul>

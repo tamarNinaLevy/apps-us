@@ -37,6 +37,17 @@ export function NoteIndex() {
             })
     }
 
+    function onToggleTodo(noteId) {
+        let note = notes.find(note => note.id === noteId)
+        note = { ...note }
+        noteService.save(note)
+            .then(() => {
+                loadNotes()
+            })
+
+
+    }
+
     if (!notes) return <div>Loading...</div>
     return (<div>
         <section className="note-index">
@@ -45,13 +56,15 @@ export function NoteIndex() {
             <NoteList
                 notes={notes.filter(note => note.isPinned)}
                 handleOnRemoveNote={onRemoveNote}
-                handleOnTogglePin={onTogglePin} />
+                handleOnTogglePin={onTogglePin}
+                handleOnToggleTodo={onToggleTodo} />
             <h3>OTHERS</h3>
             <NoteList
                 notes={notes.filter(note => !note.isPinned)
                 }
                 handleOnRemoveNote={onRemoveNote}
-                handleOnTogglePin={onTogglePin} />
+                handleOnTogglePin={onTogglePin}
+                handleOnToggleTodo={onToggleTodo} />
 
         </section>
     </div>
