@@ -1,4 +1,4 @@
-.modal-backdrop {
+.mail-index-container .modal-backdrop {
     position: fixed;
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(2px);
@@ -8,7 +8,7 @@
     z-index: 0;
 }
 
-.modal-content {
+.mail-index-container .modal-content {
     position: fixed;
     font-size: 1.1em;
     inset: 0;
