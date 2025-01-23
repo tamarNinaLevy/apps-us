@@ -20,10 +20,6 @@ export function ComposeMail({ isOpen, setIsOpen, setMails }) {
 
     const [composedMail, setComposedMail] = useState({ subject: '', body: '' })
 
-    useEffect(() => {
-        console.log("composedMail: ", composedMail)
-    }, [composedMail])
-
     function onClose() {
         setIsOpen(!setIsOpen)
     }
@@ -55,10 +51,9 @@ export function ComposeMail({ isOpen, setIsOpen, setMails }) {
             alert('Empty input')
             return
         } else {
-            console.log('Submitting...')
             mailService.save(composedMail)
                 .then((res) => {
-                    console.log("res: ", res);
+                    setMails(prev => [...prev, composedMail])
                     alert('Added mail successfully')
                 })
                 .catch(err => {
