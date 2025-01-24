@@ -1,5 +1,5 @@
 export function SearchInput() {
-    return <div className="search">
-        <h1>Search input</h1>
+    return <div className="search-container">
+        <input type="text" className="search" name="filter" id="filter" placeholder="search"/>
     </div>
 }

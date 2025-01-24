@@ -9,25 +9,30 @@ export const mailService = {
     get,
     remove,
     save,
-    countUnraed,
+    countUnread,
     updatePropInMail,
     removeToTrash
 }
 
 function query(filterBy = {}) {
-    console.log('inside service');
     return storageService.query(MAIL_KEY)
         .then(mails => {
             if (filterBy.trash) {
                 return mails.filter((mail) => mail.removedAt !== null)
             }
             if (filterBy.drafts) {
-                return mails.filter((mail) => mail.sentAt !== null)
+                return mails.filter((mail) => mail.sentAt === null && mail.removedAt === null)
             }
             if (filterBy.unread) {
-                return mails.filter((mail) => !mail.isRead)
+                return mails.filter((mail) => !mail.isRead && mail.removedAt === null && mail.sentAt !== null)
             }
-            return mails.filter((mail) => mail.removedAt === null || mail.sentAt === null)
+            if (filterBy.all) {
+                return mails.filter((mail) => mail.removedAt === null && mail.sentAt !== null)
+            }
+            if (filterBy.favorites) {
+                return mails.filter((mail) => mail.isFavorite)
+            }
+            return mails;
         })
 }
 
@@ -62,9 +67,15 @@ function updatePropInMail(mailId, propName, newVal) {
         })
 }
 
-function countUnraed(mails) {
-    const unread = mails.filter((mail) => !mail.isRead)
-    return unread.length
+function countUnread() {
+    return query({ unread: true })
+        .then((res) => {
+            const mails = res
+            return mails.length
+        })
+        .catch((err) => {
+            console.log('ERR: ', err);
+        })
 }
 
 function removeToTrash(mailId) {

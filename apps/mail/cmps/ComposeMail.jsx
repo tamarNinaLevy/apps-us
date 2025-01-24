@@ -1,6 +1,7 @@
-const { useState } = React
+const { useState, useEffect } = React
 
 import { Modal } from '../../../cmps/Modal.jsx'
+
 import { mailService } from '../services/mail.service.js'
 
 // {
@@ -15,12 +16,19 @@ import { mailService } from '../services/mail.service.js'
 //      to: 'user@appsus.com'
 // }
 
-export function ComposeMail({ isOpen, setIsOpen, setMails }) {
+export function ComposeMail({ isOpen, setIsOpen, setMails, mail }) {
 
     const [composedMail, setComposedMail] = useState({ to: '', subject: '', body: '', })
 
-    function onClose() {
+    useEffect(() => {
+        if (mail) {
+            setComposedMail(mail)
+        }
+    }, [mail])
+
+    function closeModal() {
         setIsOpen(!setIsOpen)
+        setComposedMail({ to: '', subject: '', body: '', })
     }
 
     function onInput(event) {
@@ -56,14 +64,26 @@ export function ComposeMail({ isOpen, setIsOpen, setMails }) {
                 isRead: false,
                 sentAt: new Date(),
                 removedAt: null,
-                from: 'momo@momo.com',
+                from: 'tamarlevy2002@gmail.com',
             }
             mailService.save(newMail)
                 .then((mail) => {
-                    setMails(prev => {
-                        return [...prev, { ...newMail, id: mail.id }]
-                    })
-                    onClose()
+                    //if submit is from draft with id
+                    if (composedMail.id) {
+                        setMails(prev => {
+                            const copy = [...prev]
+                            const idx = prev.findIndex((mail) => {
+                                mail.id === composedMail.id
+                            })
+                            copy.splice(idx, 1, newMail)
+                            return copy
+                        })
+                    } else {
+                        setMails(prev => {
+                            return [...prev, { ...newMail, id: mail.id }]
+                        })
+                    }
+                    closeModal()
                     alert('Added mail successfully')
                 })
                 .catch(err => {
@@ -73,19 +93,33 @@ export function ComposeMail({ isOpen, setIsOpen, setMails }) {
     }
 
     function saveDraft() {
-        console.log('Saving draft...')
+        const emptyInputs = validateMail()
+        if (emptyInputs.length === 3) {
+            closeModal()
+            return
+        }
         const newDraft = {
             ...composedMail,
             createdAt: new Date(),
             isRead: false,
             sentAt: null,
             removedAt: null,
-            from: 'momo@momo.com',
+            from: 'tamarlevy2002@gmail.com',
         }
         mailService.save(newDraft)
             .then((res) => {
-                // setMails(prev => [...prev])
-                onClose()
+                //if in edit draft with id then replace
+                if (newDraft.id) {
+                    setMails(prev => {
+                        const copy = [...prev]
+                        const idx = prev.findIndex((mail) => {
+                            mail.id === newDraft.id
+                        })
+                        copy.splice(idx, 1, newDraft)
+                        return copy
+                    })
+                }
+                closeModal()
                 alert('Saved draft successfully!')
             })
             .catch(err => {
@@ -93,16 +127,15 @@ export function ComposeMail({ isOpen, setIsOpen, setMails }) {
             })
     }
 
-    return <Modal isOpen={isOpen} onClose={onClose}>
+    return <Modal isOpen={isOpen} onClose={saveDraft}>
         <div className="compose-container">
             <span>New message</span>
             <form onSubmit={(event) => submitMail(event)} className='form flex column align-center justify-center'>
-                <input className="input title" type="text" name="to" id="to" onInput={onInput} placeholder="To" />
-                <input className="input" type="text" name="subject" id="subject" onInput={onInput} placeholder="Subject" />
-                <input className="input body-txt" type="text" name="body" id="body" onInput={onInput} placeholder="Body" />
+                <input className="input title" type="text" name="to" id="to" onInput={onInput} placeholder="To" defaultValue={composedMail.to || ''} />
+                <input className="input" type="text" name="subject" id="subject" onInput={onInput} placeholder="Subject" defaultValue={composedMail.subject || ''} />
+                <input className="input body-txt" type="text" name="body" id="body" onInput={onInput} placeholder="Body" defaultValue={composedMail.body || ''} />
                 <div className="flex row align-center justify-center">
                     <input className="span-margin" type="submit" value="submit" />
-                    <input className="span-margin" type="button" name="draft" value="save draft" onClick={saveDraft} />
                 </div>
             </form>
         </div>
