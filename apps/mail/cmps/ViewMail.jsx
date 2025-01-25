@@ -1,19 +1,21 @@
 const { useEffect, useState } = React
 
-const { useParams } = ReactRouterDOM
+const { useNavigate, useParams } = ReactRouterDOM
 
-import { mailService } from "../services/mail.service.js"
 import { WhiteBox } from "./WhiteBox.jsx"
+
+import { formatDate } from "../../../services/util.service.js"
+import { mailService } from "../services/mail.service.js"
 
 export function ViewMail() {
 
     const { mailId } = useParams()
+    const navigate = useNavigate()
 
     const [mail, setMail] = useState(null)
 
     useEffect(() => {
         loadMail()
-        getMailKeys()
     }, [mailId])
 
     function loadMail() {
@@ -24,27 +26,32 @@ export function ViewMail() {
             })
     }
 
-    const keys = getMailKeys()
-
-    function getMailKeys() {
-        const keys = []
-        for (let key in mail) {
-            keys.push(key)
-        }
-        return keys
+    function viewList() {
+        navigate(`/mail`)
     }
 
     return <WhiteBox>
-        <div className="view-mail-container">
-            {
-                keys.map((key, index) => {
-                    return <div className="key-val-dtl" key={mail.id + index}>
-                        <span>{key}:</span>
-                        <span>{mail[key]}</span>
-                        <br />
+        {
+            mail && (
+                <React.Fragment>
+                    <div className="buttons">
+                        <input type="button" value="go back" onClick={viewList} />
                     </div>
-                })
-            }
-        </div>
+                    <div className="headers">
+                        <h1>{mail.subject}</h1>
+                        <div className="from-to-container">
+                            <span className="from">{mail.from}</span>
+                            <div className="sentAt-to-container flex row align-center">
+                                <span className="to">{mail.to}</span>
+                                <span className="to">{formatDate(mail.sentAt)}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="content-mail-container">
+                        <span>{mail.body}</span>
+                    </div>
+                </React.Fragment>
+            )
+        }
     </WhiteBox>
 }

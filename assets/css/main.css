@@ -17,7 +17,6 @@
 /* @import './apps/note/pages/NoteIndex.css'; */
 
 @import './apps/mail/pages/MailIndex.css';
-@import './apps/mail/cmps/MailList.css';
 @import './apps/mail/cmps/MailPreview.css';
 @import './apps/mail/cmps/MailHeader.css';
 @import './apps/mail/cmps/EmailCategories.css';
@@ -25,6 +24,8 @@
 @import './apps/mail/cmps/ComposeMail.css';
 @import './apps/mail/cmps/WhiteBox.css';
 @import './apps/mail/cmps/BlueContainer.css';
+@import './apps/mail/cmps/ViewMail.css';
+
 
 
 /* Cmps */

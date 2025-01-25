@@ -12,7 +12,6 @@
     margin-bottom: 1%;
     height: 77vh;
     overflow-y: scroll;
-    border: thin solid lightgray;
 }
 
 .white-box-container::-webkit-scrollbar {

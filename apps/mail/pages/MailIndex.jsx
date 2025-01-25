@@ -1,9 +1,11 @@
 const { useEffect, useState } = React
+const { useParams } = ReactRouterDOM
 
 import { MailList } from '../cmps/MailList.jsx'
 import { MailHeader } from '../cmps/MailHeader.jsx'
 import { EmailActionsSideBar } from '../cmps/EmailActionsSideBar.jsx'
 import { BlueContainer } from '../cmps/BlueContainer.jsx'
+import { ViewMail } from '../cmps/ViewMail.jsx'
 
 import { mailService } from '../services/mail.service.js'
 
@@ -20,6 +22,8 @@ export function MailIndex() {
         all: true,
         favorites: true
     })
+
+    const { mailId } = useParams()
 
     useEffect(() => {
         loadMails()
@@ -81,13 +85,14 @@ export function MailIndex() {
         <MailHeader />
         <div className='actions-mails-container'>
             {
-                mails.length > 0 &&
-                <MailList
-                    mails={mails}
-                    setSelectedMailInfo={setSelectedMailInfo}
-                    deleteMail={deleteMail}
-                    setMails={setMails}
-                />
+                mailId ? <ViewMail /> :
+                    mails.length > 0 &&
+                    <MailList
+                        mails={mails}
+                        setSelectedMailInfo={setSelectedMailInfo}
+                        deleteMail={deleteMail}
+                        setMails={setMails}
+                    />
             }
             <EmailActionsSideBar
                 setMails={setMails}

@@ -58,3 +58,31 @@ export function loadFromStorage(key) {
     var val = localStorage.getItem(key)
     return JSON.parse(val)
 }
+
+export function formatDate(inputDate) {
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const now = new Date();
+    const date = new Date(inputDate);
+
+    // Format: Jan 24, 2025
+    const month = months[date.getMonth()];
+    const day = date.getDate();
+    const year = date.getFullYear();
+
+    // Format: 12:28 PM
+    let hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const period = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
+
+    // Calculate the difference in days
+    const timeDiff = Math.abs(now - date);
+    const daysAgo = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    const timeDescriptor = daysAgo === 0
+        ? "today"
+        : daysAgo === 1
+            ? "yesterday"
+            : `${daysAgo} days ago`;
+
+    return `${month} ${day}, ${year}, ${hours}:${minutes} ${period} (${timeDescriptor})`;
+}
