@@ -19,7 +19,7 @@ export function Home() {
                 contributers.map((contributer) => {
                     return <InfoCard
                         id={contributer.id || ''}
-                        key={contributer.id}
+                        key={contributer.id || contributer.profilePhotoSrc}
                         fullName={contributer.fullName}
                         gMail={contributer.gMail}
                         profilePhotoSrc={contributer.profilePhotoSrc}
