@@ -1,1 +1,69 @@
- /* home */
+.home {
+    height: 612px;
+    justify-content: flex-start;
+    overflow-y: scroll;
+}
+
+.home-page-header {
+    padding: 10px;
+    font-size: 30px;
+    margin: 20px;
+    height: 20%;
+}
+
+.contributers-container {
+    height: 50vh;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.info-main-container {
+    height: 25rem;
+    width: 20rem;
+    background-color: white;
+    justify-content: space-evenly;
+    border-radius: 10%;
+    padding: 0.5rem;
+    box-shadow: 0px 2px 8px 1px lightgray;
+}
+
+.info-main-container:hover {
+    scale: 1.1;
+    box-shadow: 0px 4px 10px 3px lightgray;
+    transition: scale 0.5s;
+}
+
+.photo {
+    height: 60%;
+    width: 80%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.photo:hover {
+    scale: 1.1;
+    transition: scale 0.5s;
+}
+
+.cntrbtr {
+    height: 59%;
+    width: 24%;
+    object-fit: none;
+}
+
+.cntrbtr:hover {
+    scale: 1.1;
+    transition: scale 0.5s;
+}
+
+.hover:hover {
+    color: rgb(2, 5, 53);
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.link:active {
+    color: black;
+}
