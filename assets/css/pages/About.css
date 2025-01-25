@@ -1,0 +1,15 @@
+.about {
+    justify-content: flex-start;
+}
+
+.about-header {
+    padding: 10px;
+    font-size: 30px;
+    margin: 20px;
+    height: 20%;
+}
+
+.about-txt {
+    width: 30%;
+    margin: auto;
+}
