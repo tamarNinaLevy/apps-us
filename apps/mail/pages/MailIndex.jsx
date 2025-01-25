@@ -3,6 +3,7 @@ const { useEffect, useState } = React
 import { MailList } from '../cmps/MailList.jsx'
 import { MailHeader } from '../cmps/MailHeader.jsx'
 import { EmailActionsSideBar } from '../cmps/EmailActionsSideBar.jsx'
+import { BlueContainer } from '../cmps/BlueContainer.jsx'
 
 import { mailService } from '../services/mail.service.js'
 
@@ -76,9 +77,9 @@ export function MailIndex() {
             })
     }
 
-    return <div className='mail-index-container'>
+    return <BlueContainer>
         <MailHeader />
-        <div className='list-categories-container'>
+        <div className='actions-mails-container'>
             {
                 mails.length > 0 &&
                 <MailList
@@ -95,5 +96,5 @@ export function MailIndex() {
                 unread={unread}
             />
         </div>
-    </div>
+    </BlueContainer>
 }

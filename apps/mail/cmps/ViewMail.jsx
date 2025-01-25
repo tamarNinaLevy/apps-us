@@ -3,6 +3,7 @@ const { useEffect, useState } = React
 const { useParams } = ReactRouterDOM
 
 import { mailService } from "../services/mail.service.js"
+import { WhiteBox } from "./WhiteBox.jsx"
 
 export function ViewMail() {
 
@@ -33,16 +34,17 @@ export function ViewMail() {
         return keys
     }
 
-    return <div className="view-mail-container">
-        <h1>hello view</h1>
-        {
-            keys.map((key) => {
-                return <div className="key-val-dtl" key={mail.id}>
-                    <span>{key}:</span>
-                    <span>{mail[key]}</span>
-                    <br />
-                </div>
-            })
-        }
-    </div>
+    return <WhiteBox>
+        <div className="view-mail-container">
+            {
+                keys.map((key, index) => {
+                    return <div className="key-val-dtl" key={mail.id + index}>
+                        <span>{key}:</span>
+                        <span>{mail[key]}</span>
+                        <br />
+                    </div>
+                })
+            }
+        </div>
+    </WhiteBox>
 }

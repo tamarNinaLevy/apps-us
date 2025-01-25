@@ -4,6 +4,7 @@ const { useNavigate } = ReactRouterDOM
 import { mailService } from "../services/mail.service.js"
 import { ComposeMail } from "./ComposeMail.jsx"
 import { MailPreview } from "./MailPreview.jsx"
+import { WhiteBox } from "./WhiteBox.jsx"
 
 export function MailList({ mails, setSelectedMailInfo, deleteMail, setMails }) {
 
@@ -58,7 +59,7 @@ export function MailList({ mails, setSelectedMailInfo, deleteMail, setMails }) {
             })
     }
 
-    return <div className="mail-list">
+    return <WhiteBox>
         {mails.map((mail, index) => {
             return <div className="mail-preview-container flex row align-center" key={mail.id || index}>
                 <div className="star span-margin" onClick={() => favorite(mail)}>
@@ -92,5 +93,5 @@ export function MailList({ mails, setSelectedMailInfo, deleteMail, setMails }) {
             setMails={setMails}
             mail={draft}
         />
-    </div>
+    </WhiteBox>
 }

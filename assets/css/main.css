@@ -23,6 +23,9 @@
 @import './apps/mail/cmps/EmailCategories.css';
 @import './apps/mail/cmps/modal.css';
 @import './apps/mail/cmps/ComposeMail.css';
+@import './apps/mail/cmps/WhiteBox.css';
+@import './apps/mail/cmps/BlueContainer.css';
+
 
 /* Cmps */
 @import './cmps/UserMsg.css';
