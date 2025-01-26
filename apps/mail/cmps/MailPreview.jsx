@@ -15,7 +15,7 @@ export function MailPreview({ mail }) {
 
     return <div className='preview-container' key={mail.id}>
         <span className={`span-margin ${bold} small-detail`}>{mail.from}</span> <br />
-        <span className="email-detail flex row align-center justify-start">
+        <span className="email-detail flex row align-center justify-center">
             <span className={`span-margin ${bold} font-gray`}>{mail.subject} - </span>
             <span className="span-margin">{txtBody}</span>
         </span>
